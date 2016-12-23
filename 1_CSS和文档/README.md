@@ -45,7 +45,7 @@ CSS就是在这种背景下引入的。它的目标很简单：提供一种简�
 
 ###元素显示角色
 
-除了替换和费替换元素，CSS2.1还使用另外两种基本类型来区分元素：**块级（block-level）**和**行内级（inline-level）**。曾经把时间花费在HTML标签和它们在web浏览器中的显示上的开发者，应该对这两个类型更加熟悉。元素在图1中展示。
+除了替换和费替换元素，CSS2.1还使用另外两种基本类型来区分元素：**块级（block-level）**和**行内级（inline-level）**。曾经花费时间在HTML标签和它们在web浏览器中显示上的开发者，会对这两个类型更加熟悉。元素在图1中展示。
 
 ![图1：HTML文档中的块级和行内元素](figure1.png)
 
@@ -53,15 +53,15 @@ CSS就是在这种背景下引入的。它的目标很简单：提供一种简�
 
 ####块级元素
 
-**块级元素**生成一个（默认情况下）填充其父元素的内容区域的元素框，并且在其两侧不能有其他元素。 换句话说，它在元素框之前和之后生成“断行”。 HTML中最熟悉的块元素是`p`和`div`。 替换元素可以是块级元素，但通常它们不是。
+**块级元素**生成一个（默认情况下）填充其父元素的内容区域的元素框，并且在其两侧不能有其他元素。 换句话说，它在元素框之前和之后生成“断行”。 HTML中最常见的块元素是`p`和`div`。 替换元素可以是块级元素，但通常它们不是。
 
-列表项是一种特别的块级元素。 除了以与其他块级元素一致的行为之外，它们还生成一个标记（通常是用于无序列表的项目符号和用于有序列表的数字）并“附加到”元素框。 除了这个标记，列表项与其他块级元素的行为完全相同。
+列表项是一种特别的块级元素。 除了与其他块级元素一致的行为之外，它们还生成一个标记（通常是用于无序列表的项目符号和用于有序列表的数字）并“附加到”元素框。 除了这个标记，列表项与其他块级元素的行为完全相同。
 
 ####行内元素
 
-**行内元素**在文本行内生成一个元素框，并且不会破坏该行的流。HTML中的行内元素的最好例子是`a`元素，其它还有`strong`和`em`。这些元素不会在自身之前或之后生成“断行”，所以它们可以出现在其它元素的内容之中，并且不会破坏其显示。
+**行内元素**在文本行内生成一个元素框，并且不会破坏该行的流。HTML中行内元素的最好例子是`a`元素，其它还有`strong`和`em`。这些元素不会在自身之前或之后生成“断行”，所以它们可以出现在其它元素的内容之中，并且不会破坏其显示。
 
-需要注意，虽然名称“块级”和“行内”与HTML中的块和行内元素有很多共同之处，但还有一个重要区别：在HTML中，块级元素不能作为行内元素的后代；但在CSS中，对显示角色之间的嵌套没有限制。
+需要注意，虽然名称“块级”和“行内”与HTML中的块和行内元素有很多共同之处，但还有个重要区别：在HTML中，块级元素不能作为行内元素的后代；但在CSS中，对显示角色之间的嵌套没有限制。
 
 要了解其工作原理，我们来考虑一个CSS属性`display`：
 
@@ -110,12 +110,13 @@ em {display: block;}
 修改元素的显示角色在HTML文档中很有用，它对XML文档也至关重要。XML文档一般没有默认的显示角色，而完全依赖文档开发者去定义它们。例如，如果你想要展示下面的XML片段：
 
 ~~~xml
-<book>	<maintitle>Cascading Style Sheets: The Definitive Guide</maintitle> 	<subtitle>Third Edition</subtitle>	<author>Eric A. Meyer</author>	<publisher>O'Reilly and Associates</publisher>	<pubdate>November 2006</pubdate>	<isbn type="print">978-0-596-52733-4</isbn></book> 
-<book>	<maintitle>CSS Pocket Reference</maintitle> 
-	<subtitle>Third Edition</subtitle>
-	<author>Eric A. Meyer</author> 	
-	<publisher>O'Reilly and Associates</publisher> 
-	<pubdate>October 2007</pubdate>	<isbn type="print">978-0-596-51505-8</isbn> 
+<book>	<maintitle>Cascading Style Sheets: The Definitive Guide</maintitle>  
+	<subtitle>Third Edition</subtitle>  	<author>Eric A. Meyer</author>  	<publisher>O'Reilly and Associates</publisher>  	<pubdate>November 2006</pubdate>  	<isbn type="print">978-0-596-52733-4</isbn>  </book>  
+<book>  	<maintitle>CSS Pocket Reference</maintitle>   
+	<subtitle>Third Edition</subtitle>  
+	<author>Eric A. Meyer</author>  
+	<publisher>O'Reilly and Associates</publisher>  
+	<pubdate>October 2007</pubdate>  	<isbn type="print">978-0-596-51505-8</isbn>  
 </book>
 ~~~
 
@@ -193,15 +194,15 @@ h3 {color: white; background: black; font: medium Helvetica;}
 
 这就是它的全部内容——没有HTML标记或者注释，只有干净简单的样式声明。它们被存储在纯文本文件中，通常用`.css`作为后缀，例如`sheet1.css`。
 
-_外部样式中不能包含任何文档标记，只能包含CSS规则和CSS注释，我们将在后面的章节解释它们。外部样式表中的标记可能会导致其中的全部或部分样式被忽略。_
+_**外部样式中不能包含任何文档标记，只能包含CSS规则和CSS注释，我们将在后面的章节解释它们。外部样式表中的标记可能会导致其中的全部或部分样式被忽略。**_
 
-文件扩展名不是必需的，但如果文件名不是以`.css`结尾，即使你在`link`元素中设置了正确的文件类型`text/css`，一些旧浏览器的浏览器依然无法把文件识别为样式表。实际上，如果文件名不是以`.css`结尾，一些web服务器不会把文件当做`text/css`来处理，但通常这个问题可以通过修改服务器配置文件来解决。
+文件扩展名不是必需的，但如果文件名不是以`.css`结尾，即使你在`link`元素中设置了正确的文件类型`text/css`，一些旧浏览器依然无法把文件识别为样式表。实际上，如果文件名不是以`.css`结尾，一些web服务器不会把文件当做`text/css`来处理，但通常这个问题可以通过修改服务器配置文件来解决。
 
 ####属性
 
 对于`link`标签的其它部分，属性和值都很直白。`rel`表示“关系”（relation），这里关系就是`stylesheet`（样式表）。`type`属性始终设置为`text/css`，这个值描述了被`link`标签加载的数据的类型。这样，web浏览器就可以知道这个样式表是一个CSS样式表，这决定着浏览器如何处理它引入的数据。毕竟，将来可能会用到其它样式语言，所以声明你所使用的是哪种语言是有必要的。
 
-接下来是`href`属性，这个属性的值是样式表的URL。这个URL可以是绝对或相对地址，这取决于你的需要。当然在我们的示例中URL是相对的，显而易见地它也可以是`http://meyerweb.com/sheet1.css.`这种形式。
+接下来是`href`属性，这个属性的值是样式表的URL。这个URL可以是绝对或相对地址，这取决于你的需要。当然在我们的示例中URL是相对的，显然它也可以是`http://meyerweb.com/sheet1.css.`这种形式。
 
 最后是`media`属性，这个属性的值是一个或多个**媒体描述符**。媒体描述符是关于媒体类型和这些媒体的特性的规则，每个规则之间用逗号分隔。例如，你在屏幕和投影媒体上都可以使用一个这样的链接样式表：
 
@@ -243,7 +244,7 @@ _外部样式中不能包含任何文档标记，只能包含CSS规则和CSS注�
 
 *图6：一个支持选择备用样式的浏览器*
 
-_在2012年初，大部分基于Gecko引擎的浏览器已经支持了备用样式表，如Firefox和Opera。在Internet Explorer系列的浏览器中可以使用JavaScript实现支持，但是没有被浏览器原生支持。Webkit系列浏览器不支持选择备用样式表。（相比之下，图6所示的这么老旧的浏览器都提供了支持，真是令人震惊。）_
+_**在2012年初，大部分基于Gecko引擎的浏览器已经支持了备用样式表，如Firefox和Opera。在Internet Explorer系列的浏览器中可以使用JavaScript实现支持，但是没有被浏览器原生支持。Webkit系列浏览器不支持选择备用样式表。（相比之下，图6所示的这么老旧的浏览器都提供了支持，真是令人惊讶。）**_
 
 通过给`title`属性赋相同的值，备用样式表可以分组组合。因此，你可以让用户在无论屏幕媒体还是打印媒体中都能选择不同的展示方式。例如：
 
@@ -441,7 +442,7 @@ _**等价的技术存在于通用脚本语言中，如PHP和IIS，这两种语�
 <link href="print-color.css" type="text/css"media="print and (color), projection and (color)" rel="stylesheet">@import url(print-color.css) print and (color), projection and (color);
 ~~~
 
-任何情况下，只要任何一个（逗号分隔的）媒体查询的判断结果为“真”，就会使用关联的样式表。因此，在前面的`@import`中，`print-color.css`将会被应用于彩色打印机或彩色投影环境的渲染。如果在黑白打印机上打印，两个查询的结果都是“假”，则`print-color.css`不会被应用于文档，对于任何屏幕媒体、灰阶投影环境、听觉媒体环境等都是如此。
+任何情况下，只要任何一个（逗号分隔的）媒体查询的判断结果为“真”，就会使用关联的样式表。因此，在前面的`@import`中，`print-color.css`将会被应用于彩色打印机或彩色投影环境的渲染。如果在黑白打印机上打印，两个查询的结果都是“假”，则`print-color.css`不会被应用于文档，对于任何屏幕媒体、灰阶（非彩色）投影环境、听觉媒体环境等都是如此。
 
 每个媒体描述符由一个媒体类型和一或多个媒体特性组成，每个媒体特性描述符都被包括在括号中。如果没有指定媒体类型，它将被默认设置为`all`，因此下面两个示例是完全等价的：
 
@@ -453,10 +454,10 @@ _**等价的技术存在于通用脚本语言中，如PHP和IIS，这两种语�
 
 多个特性描述符可以使用逻辑关键字`and`链接，媒体查询里面有两个逻辑关键字：
 
-- `and`  
+- **`and`**  
 使用这种方式链接两个或多个媒体特性时，只有当每个媒体特性都为真，总的查询结果才为真。例如，`(color) and (orientation: landscape) and (min-device-width: 800px)`表示三个条件必须都被满足：当媒体环境具有颜色、横向显示，而且设备的显示宽度至少为800像素时，样式表才会被使用。
 
-- `not`  
+- **`not`**  
 对整个查询求反，如果所有的条件都为真，样式表则不会被使用。例如，`not (color) and (orientation: landscape) and (min- device-width: 800px)`表示如果三个条件被满足，则表达式会被否定。因此，当媒体环境具有颜色、横向显示，并且设备显示宽度至少为800像素时，样式表不会被使用；反之在其它任何情况下，样式表都会被使用。
 请注意，`not`关键字只能用在媒体查询的开头。`(color) and not (min-device-width: 800px)`这样的用法是不合法的，在这种情况下，查询会被忽略。同样需要注意的是，太旧的浏览器会因为无法理解媒体查询而总是跳过媒体描述符以`not`开头的样式表。
 
@@ -464,7 +465,7 @@ _**等价的技术存在于通用脚本语言中，如PHP和IIS，这两种语�
 
 另外还有一个关键字`only`，专门用于向后兼容。是的，你没看错。
 
-- `only`  
+- **`only`**  
 用于对无法理解媒体查询的旧浏览器隐藏样式表。例如，为了在所有媒体但仅在能够理解媒体查询的浏览器上应用样式表，写做`@import url(new.css) only all`。对于能够理解媒体查询的浏览器，`only`关键字会被忽略，样式表会被使用；对不能理解媒体查询的浏览器，`only`关键字会创建一个显式的媒体类型`only all`，而这是非法的，因此样式表不会应用于这样的浏览器中。要注意，`only`关键字只能用在媒体查询的开头。
 
 ###媒体特性描述符
@@ -601,14 +602,15 @@ h1 {color: maroon;}body {background: yellow;}
 
 ~~~css
 rainbow:infrared red orange yellow green blue indigo violet ultraviolet; 
-rainbow:infrared red orange yellow green blue indigo violet ultraviolet; rainbow:infrared 
-redorange 
-yellow 
-greenblue 
-indigo 
-violet 
-ultraviolet 
-;
+rainbow:	infrared red orange yellow green blue indigo violet ultraviolet;  
+rainbow:	infrared 
+	red	orange 
+	yellow 
+	green	blue 
+	indigo 
+	violet 
+	ultraviolet 
+	;
 ~~~
 
 以及其他你能想到的分隔模式。唯一的限制是分割字符需要是空白：空格、tab符、换行符，单个还是组合使用，随你喜欢。
@@ -650,7 +652,7 @@ h1 {color: maroon;}
 }
 ~~~
 
-但是由于这种写法与去掉第一行和最后一行没有什么区别，因此这么做没有什么意思。
+但是由于这种写法与去掉第一行和最后一行之后的写法没有什么区别，因此这么做没有什么意义。
 
 _**本节中的缩进仅仅是为了显示得更清晰，你不需要遵守`@media`块中的缩进规则，但这样做是推荐的，因为它可以使你的CSS更易于阅读。**_
 
@@ -704,7 +706,7 @@ _**CSS注释会被CSS解析器当做不存在一样，也不会当做空白处�
 
 ##总结
 
-CSS可以完全改变用户代理显示`元素`的方式。这种改变可以使用`display`属性在基础显示级别上执行，并且通过把样式表关联到文档的不同方式来执行，用户不会知道这是通过外部还是内嵌样式表，甚至行内样式表完成的。外部样式表的重要性在于允许开发者把一个站点的所有展示信息放在一个地方，然后把所有文档指向这个地方。这不仅使站点更新和维护变得容易，还因为在文档中移除了所有展示信息而节省了带宽。
+CSS可以完全改变用户代理显示元素的方式。这种改变可以使用`display`属性在基本的显示级别上执行，并且通过把样式表关联到文档的不同方式来执行，用户不会知道这是通过外部还是内嵌样式表，甚至行内样式表完成的。外部样式表的重要性在于允许开发者把一个站点的所有展示信息放在一个地方，然后把所有文档指向这个地方。这不仅使站点更新和维护变得容易，还因为在文档中移除了所有展示信息而节省了带宽。
 
 为了充分利用CSS的能力，开发者需要弄清楚如何将一组样式与文档中的元素相关联。为了完全理解CSS是如何做到这一点的，开发者需要透彻地领会CSS选择文档片段的方式，这就是下一个主题：“选择器，特度和层叠”。
 
