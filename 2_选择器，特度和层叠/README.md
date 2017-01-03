@@ -310,8 +310,109 @@ span.warning {font-weight: bold;}
 请注意上例中的一般类选择器，它只包含一个类名和前面的句点，而没有任何元素名称，也没有统配选择器。如果你想选择具有某个类名的所有元素，省略通配选择器不会有任何影响。
 
 ###多类
+
+我们在前面看到了包含单个单词的`class`的属性值。在HTML中，使用空白分隔的单词列表可以作为单个`class`的值。例如，如果你想把某个特定元素标记为既是紧急的又是一个警告，可以这样写：
+
+~~~html
+<p class="urgent warning">When handling plutonium, care must be taken to 
+avoid the formation of a critical mass.</p><p>With plutonium, <span class="warning">the possibility of implosion is 
+very real, and must be avoided at all costs</span>. This can be accomplished
+ by keeping the various masses separate.</p>
+~~~
+
+（`class`值中）单词的顺序没有影响，写成`warning urgent`会产生完全相同的结果，无论CSS怎么写。
+
+假如你想让所有`class`值为`warning`的元素加粗，把`class`值为`urgent`的设为斜体，而同时包含两个值的元素设置银色背脊，写法是这样：
+
+~~~css
+.warning {font-weight: bold;}  
+.urgent {font-style: italic;}  
+.warning.urgent {background: silver;}
+~~~
+
+同时使用两个类选择器，可以选择那些只有同时具有两个类名的元素，无论类名的顺序如何。正如示例，HTML代码中含有`class="urgent warning"`,但CSS选择器却写作`.warning.urgent`。这条规则依然可以把“When handling plutonium . . .”这段设置为银色背景，如图1-8所示，这是因为单词书写的顺序并不重要。（但这并不表示类名的顺序总是无关紧要的，我们将会在本书稍后涉及。）
+
+![图1-8：使用多类名选择元素](figure1-8.png)
+*图1-8：使用多类名选择元素*
+
+如果多类选择器里面包含一个不存在于空格分隔列表的类名，匹配将会失败。例如这个规则：
+
+~~~css
+p.warning.help {background: red;}
+~~~
+
+你可能期望这个选择器会匹配所有`class`中含有单词`warning`或`help`的`p`元素，然而实际上它不会匹配`class`属性中只有`warning`和`urgent`的`p`元素。它会匹配这样的元素：
+
+~~~html
+<p class="urgent warning help">Help me!</p>
+~~~
+
+_**IE7以前的Internet Exlorer版本处理多类选择器有问题。在这些旧版本中，虽然可以选择列表中的单个类名，但对多个类名的选择无法正常生效。`p.warning`会按照预期生效，但` p.warning.help`会匹配任意一个`class`属性值列表中含有`help`的`p`元素。如果你使用`p.warning.help`，旧版本的IE会匹配任何一个`class`值列表中含有`warning`的`p`元素，而无论值中有没有`help`。**_
+
 ###ID选择器
+
+从某些方面说，ID选择器和类选择器类似，但它们有一些重要区别。首先，ID选择器使用井号（#）开头，一条规则可能是这样的：
+
+~~~css
+*#first-para {font-weight: bold;}
+~~~
+
+这条规则为任意`id`属性值为`first-para`的元素设置文本粗体。
+
+第二个区别是ID选择器查找`id`属性而不是`class`属性的值（废话）。这是一个ID选择器生效的例子;
+
+~~~html*#lead-para {font-weight: bold;}
+<p id="lead-para">This paragraph will be boldfaced.</p>  
+<p>This paragraph will NOT be bold.</p>
+~~~
+
+注意值`lead-para`可以关联给文档中的任意元素。在这个例子中，它只赋给了第一个段落，但是你可以同样赋给第二个、第三个段落。
+
+和类选择器一样，ID选择器中的通配选择符可以忽略。上例也可以写成这样：
+
+~~~css
+#lead-para {font-weight: bold;}
+~~~
+
+效果是一样的。
+
+另一个与类选择器相似的地方是，ID选择器也可以独立于元素类型。可能有些场景下你知道有一个确定ID值会出现在文档中，但不知道会出现在那个元素上（如在前面的钚处理警告中），因此需要声明独立的ID选择器。例如，在任意给定的文档中，有一个元素的ID值是`mostImportant`，但不知道这个元素是一个段落、引用、列表还是段落头，只知道这个值会出现在每个文档中的某个随机的元素上，而且在每个文档中仅出现一次。在这种情况下，规则可以这样写：
+
+~~~css
+#mostImportant {color: red; background: yellow;}
+~~~
+
+这条规则会匹配下面的每一个元素（正如上面强调的，因为它们有相同的ID值，所以任意两个*不会*同时出现在一个文档中）：
+
+~~~html
+<h1 id="mostImportant">This is important!</h1>  
+<em id="mostImportant">This is important!</em>  
+<ul id="mostImportant">This is important!</ul>
+~~~
+
 ###决定使用Class还是ID
+
+类可以分配给任意多的元素，类名`warning`可以分配给一个`p`元素或者一个`span`元素，或者更多其它元素。另一方面，ID在一个HTML文档中使用且仅使用一次。因此如果有了一个`id`值为`lead-para`的元素，该文档中的其它元素都不能有`lead-para`的`id`值。
+
+_**在实际中，浏览器并不总会检查HTML中ID的唯一性。如果你为多个元素设置了相同的ID属性值，它们可能都会被设置为相同的样式。这是不正确的实现，但这种情况很普遍。在一个文档中存在多个ID值相同的元素还会导致DOM脚本的问题，因为像`getElementById()`这样的函数依赖于文档中只存在一个ID为特定值的元素。**_
+
+与类选择器不同，ID选择器不能联合使用，因为ID属性不允许使用空白分隔的单词列表。
+
+`class`和`id`名称的另一个区别是，当决定某个元素应该应用那个样式时，ID有更高的权重。这点将在后面详细讨论。
+
+还要注意类个ID可能是大小写敏感的，这取决于文档的语言。HTML语言把类和ID定义为大小写敏感的，因此类和ID选择器的大小写要和文档中的匹配。在下面的CSS和HTML中，元素文字不会被设置为粗体：
+
+~~~html
+p.criticalInfo {font-weight: bold;}
+<p class="criticalinfo">Don't look down.</p>
+~~~
+
+因为字母`i`的大小写不一致，选择器不会匹配元素。
+
+_**一些旧浏览器不会区分类和ID名的大小写，但是当前的所有浏览器都已经正确地实现为强制区分大小写。**_
+
+从纯语法层次来说，点-类标记（例如：`.warning`）不能保证在XML文档中生效。在撰写本文时，点-类标记在HTML、SVG和MathML中有效，它可能在未来被更多语言支持，但这要取决于语言本身的规范。哈希-ID标记（例如：#lead）在所有强制属性唯一性的语言中都有效。唯一性可以强制使用名为`id`的属性，或者任何其他属性，只要在文档中属性内容被定义为唯一的即可。
+
 ##属性选择器
 ###简单属性选择器
 ###基于准确属性值选择
