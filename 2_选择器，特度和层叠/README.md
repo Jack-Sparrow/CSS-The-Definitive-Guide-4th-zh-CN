@@ -359,7 +359,7 @@ _**IE7以前的Internet Exlorer版本处理多类选择器有问题。在这些�
 
 这条规则为任意`id`属性值为`first-para`的元素设置文本粗体。
 
-第二个区别是ID选择器查找`id`属性而不是`class`属性的值（废话）。这是一个ID选择器生效的例子;
+第二个区别是ID选择器查找`id`属性而不是`class`属性的值（废话）。这是一个ID选择器生效的例子：
 
 ~~~html*#lead-para {font-weight: bold;}
 <p id="lead-para">This paragraph will be boldfaced.</p>  
@@ -414,9 +414,149 @@ _**一些旧浏览器不会区分类和ID名的大小写，但是当前的所有
 从纯语法层次来说，点-类标记（例如：`.warning`）不能保证在XML文档中生效。在撰写本文时，点-类标记在HTML、SVG和MathML中有效，它可能在未来被更多语言支持，但这要取决于语言本身的规范。哈希-ID标记（例如：#lead）在所有强制属性唯一性的语言中都有效。唯一性可以强制使用名为`id`的属性，或者任何其他属性，只要在文档中属性内容被定义为唯一的即可。
 
 ##属性选择器
+
+类选择器和ID选择器专用于HTML、XHTML、SVG和MathML文档（到撰写本文时，译注：2012年），其他类型的文档可能不支持。因此，CSS2引入了*属性选择器*，使用元素的任意属性和值来选择元素。属性选择器有四种基本类型：简单属性选择器、精确属性值选择器、部分匹配属性选择器和头值属性选择器。
+
 ###简单属性选择器
+
+如果想选择具有某个特定属性的元素，而无论属性的值是什么，可以使用简单属性选择器。例如，选择所有具备`class`属性的`h1`元素，然后将其文本设置为银色：
+
+~~~css
+h1[class] {color: silver;}
+~~~
+
+对如下代码：
+
+~~~html
+<h1 class="hoopla">Hello</h1>  
+<h1>Serenity</h1>  <h1 class="fancy">Fooling</h1>
+~~~
+
+将得到如图1-9的结果：
+
+![图1-9：使用属性选择元素](figure1-9.png)
+
+*图1-9：使用属性选择元素*
+
+这种策略对XML文档非常有用，因为XML语言的元素经常含有表示定意义的属性名。例如可以想象一种描述太阳系行星的XML语言（可以叫它PlanetML）。如果想要选择所有包含`moons`属性的`planet`元素，把文本设置成粗体，用来突出有卫星的行星，可以这样写：
+
+~~~css
+planet[moons] {font-weight: bold;}
+~~~
+
+第二个和第三个元素将会被设置成粗体，第一个则不会：
+
+~~~html
+<planet>Venus</planet>  <planet moons="1">Earth</planet>  
+<planet moons="2">Mars</planet>
+~~~
+
+在HTML中可以用一些创新的方式使用这个特性。例如可以为所有包含`alt`属性的图片设置样式，因此突出形式规范的图片：
+
+~~~css
+img[alt] {border: 3px solid red;}
+~~~
+
+（这个特殊例子更适用于检查而不是设计目的，用来查看图片是否被设置了完全规范的标记。）
+
+大部分浏览器在鼠标放到元素上的时候，会显示元素的`title`属性值，称为“工具提示”。如果想把所有包含`title`信息的元素粗体显示，可以这样：
+
+~~~css
+*[title] {font-weight: bold;}
+~~~
+
+相似地，可以选择那些包含`href`属性的锚点（`a`）元素，以此为超链接而不是所有锚点元素添加样式。
+
+也可以基于多个属性选择元素，只需简单地并列多个属性选择器即可。例如，把包含`href`和`title`属性的HTML超链接设置为粗体：
+
+~~~css
+a[href][title] {font-weight: bold;}
+~~~
+
+第一个链接会设置为粗体，第二个和第三个不会：
+
+~~~html
+<a href="http://www.w3.org/" title="W3C Home">W3C</a><br />  
+<a href="http://www.webstandards.org">Standards Info</a><br />  
+<a name="dead" title="Not a link">dead.letter</a>
+~~~
+
 ###基于准确属性值选择
+
+选择那些属性为某个确定值的元素。例如，把指向服务器上某个特定文档的链接设置为粗体：
+
+~~~css
+a[href="http://www.css-discuss.org/about.html"] {font-weight: bold;}
+~~~
+
+所有`href`属性值**准确地**是`http://www.css-discuss.org/about.html`的`a`元素会被设置为粗体。任何修改，即使去掉了`www.`，也会造成无法匹配。
+
+任何属性和值的联合都可以定义在任何元素上，然而，如果这个联合没有（准确地）出现在文档中，选择器不会匹配任何东西。XML语言再次得益于这种方式来设置属性。回到PlantML的例子，如果想选择那些`moons`属性值为`1`的`planet`元素：
+
+~~~css
+planet[moons="1"] {font-weight: bold;}
+~~~
+
+第二个元素的文本将会被设置为粗体，第一个和第三个不会：
+
+~~~html
+<planet>Venus</planet>  <planet moons="1">Earth</planet>  
+<planet moons="2">Mars</planet>
+~~~
+
+与属性选择一样，使用多个元素-值选择器也可以选择单个文档。例如，将`href`属性值为`http://www.w3.org/`且`title`属性值为`W3C Home`的HTML超链接文本设置为两倍尺寸：
+
+~~~css
+a[href="http://www.w3.org/"][title="W3C Home"] {font-size: 200%;}
+~~~
+
+第一个元素会被设置为双倍尺寸字体，第二个和第三个不会：
+
+~~~html
+<a href="http://www.w3.org/" title="W3C Home">W3C</a><br />  
+<a href="http://www.webstandards.org"  title="Web Standards Organization">Standards Info</a><br />  
+<a href="http://www.example.org/" title="W3C Home">dead.link</a>
+~~~
+
+结果如图1-10。
+
+![图1-10：使用属性和值选择元素](figure1-9.png)
+
+*图1-10：使用属性和值选择元素*
+
+这种方式需要属性值的**精确**匹配。属性值为多个空白分隔的值列表时，匹配可能会因多个值的顺序不同而产生问题。例如：
+
+~~~html
+<planet type="barren rocky">Mercury</planet>
+~~~
+
+匹配这个元素的唯一方式是使用准确的属性值：
+
+~~~css
+planet[type="barren rocky"] {font-weight: bold;}
+~~~
+
+如果使用`planet[type="barren"]`，规则不会匹配是这个示例。即使是HTML中的`class`属性，也会出现这种情况。例如：
+
+~~~html
+<p class="urgent warning">When handling plutonium, care must be taken to 
+avoid the formation of a critical mass.</p>
+~~~
+
+要基于准确属性值选择元素，应该这样：
+
+~~~css
+p[class="urgent warning"] {font-weight: bold;}
+~~~
+
+我们将在下节看到，这和之前介绍的点-类选择是**不**等同的。这条规则将会选择`class`属性的值是**精确**的`urgent warning`的所有`p`元素，单词以相同的顺序，并且中间以单个空格隔开。它实际上是一个精确字符串匹配。
+
+同样地，ID选择器和使用`id`属性的属性选择器也不是恰好相同的。换句话说，在`h1#page-title`和`h1[id="page-title"]`之间，存在着细微但很重要的区别。这种区别将在后面的章节专门解释。
+
 ###基于部分属性值选择
+
+
+
 ###一个特别的属性选择类型
 ##使用文档结构
 ###理解父-子关系
