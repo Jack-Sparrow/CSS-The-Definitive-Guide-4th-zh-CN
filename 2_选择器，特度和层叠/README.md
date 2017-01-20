@@ -520,7 +520,7 @@ a[href="http://www.w3.org/"][title="W3C Home"] {font-size: 200%;}
 
 结果如图1-10。
 
-![图1-10：使用属性和值选择元素](figure1-9.png)
+![图1-10：使用属性和值选择元素](figure1-10.png)
 
 *图1-10：使用属性和值选择元素*
 
@@ -555,6 +555,61 @@ p[class="urgent warning"] {font-weight: bold;}
 
 ###基于部分属性值选择
 
+2011年底，CSS Selectors Level 3 模块变为W3C完全推荐状态。模块包括一些基于属性的部分值的选择器——或特称为“子串匹配属性选择器”。它们总结在表格1-1中。
+
+*表格1-1：子串匹配属性选择器*
+
+|类型|描述|
+|:----|:-----
+|[foo~="bar"]|选择所有带有`foo`属性、且`foo`属性被空白分隔的单词列表中含有单词`bar`的元素。
+|[foo*="bar"]|选择所有带有`foo`属性、且`foo`属性值中含有子串`bar`的元素。
+|[foo^="bar"]|选择所有带有`foo`属性、且`foo`属性值以`bar`开头的元素。
+|[foo$="bar"]|选择所有带有`foo`属性、且`foo`属性值以`bar`结束的元素。
+
+####在空白分隔的列表中匹配一个单词
+
+任何使用空白分隔单词列表的属性，都可以基于这些单词中的任意一个选择元素。HTML中最经典的例子是`class`属性，该属性可以使用一或多个单词作为值。看这个常用例子：
+
+~~~html
+<p class="urgent warning">When handling plutonium, care must be taken to 
+avoid the formation of a critical mass.</p>
+~~~
+
+如果要选择`class`属性中包含单词`warning`的元素，可以使用这样的属性选择器：
+
+~~~css
+p[class~="warning"] {font-weight: bold;}
+~~~
+
+注意选择器中的波浪线（~），这是基于属性值中分离单词进行选择的关键字。如果忽略了波浪线，选择器就变成了前面讨论过的精确值匹配的属性选择器。
+
+这个选择器跟前面的点-类选择器是等同的。也就是说，用于HTML文档时，`p.warning`和`p[class~="warning"]`是相等同的。这是前面提到过的“PlanetML”标记例子的一个HTML版本：
+
+~~~html
+<span class="barren rocky">Mercury</span>  
+<span class="cloudy barren">Venus</span>  
+<span class="life-bearing cloudy">Earth</span>
+~~~
+
+要把所有`class`属性值中包含单词`barren`的元素设置为斜体：
+
+~~~css
+span[class~="barren"] {font-style: italic;}
+~~~
+
+这个选择器将会匹配例子中的前两个元素并把它们设置为斜体。这和使用`span.barren {font-style: italic;}`是一样的效果。
+
+![图1-11：使用部分属性值选择元素](figure1-11.png)
+
+*图1-11：使用部分属性值选择元素*
+
+既然效果相同，为什么还要在HTML中使用波浪线-等号属性选择器呢？因为它可被用于任何属性，而不仅仅是`class`。例如：一个文档中包含许多图片，其中一部分是图表，你可以使用匹配部分属性值的选择器选择`title`属性的文字，来选中那些是图表的图片：
+
+~~~css
+img[title~="Figure"] {border: 1px solid gray;}
+~~~
+
+这条规则会选择所有`title`文字中包含`Figure`的单词。因此，如果所有的图表的`title`中都有像“Figure 4. A bald- headed elder statesman,”这样的文字，这条规则会匹配所有的图表。同样的，选择器`img[title~="Figure"]`也会匹配`title`属性值是“How to Figure Out Who’s in Charge.”这样内容的图片。所有没有`title`属性的图片，或者`title`值中不包含单词“Figure”的图片，都不会被匹配。
 
 
 ###一个特别的属性选择类型
