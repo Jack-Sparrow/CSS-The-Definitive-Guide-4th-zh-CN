@@ -611,6 +611,33 @@ img[title~="Figure"] {border: 1px solid gray;}
 
 这条规则会选择所有`title`文字中包含`Figure`的单词。因此，如果所有的图表的`title`中都有像“Figure 4. A bald- headed elder statesman,”这样的文字，这条规则会匹配所有的图表。同样的，选择器`img[title~="Figure"]`也会匹配`title`属性值是“How to Figure Out Who’s in Charge.”这样内容的图片。所有没有`title`属性的图片，或者`title`值中不包含单词“Figure”的图片，都不会被匹配。
 
+####在属性值中匹配子串
+
+有时需要匹配属性值的一部分，但并不是空格分隔的单词。这种情况下，可以使用`[att*="val"]`的形式匹配属性值中的任何位置。例如：下面的CSS匹配任何`class`属性值中包含子串`cloud`的`span`元素，所以两个“cloudy”的行星都会被匹配，如图1-12。
+
+~~~html
+span[class*="cloud"] {font-style: italic;}
+<span class="barren rocky">Mercury</span>  
+<span class="cloudy barren">Venus</span>  
+<span class="life-bearing cloudy">Earth</span>
+~~~
+
+![图1-12：基于属性值内子串选择元素](figure1-12.png)
+
+*图1-12：基于属性值内子串选择元素*
+
+这种用法有许多有用的场景，例如为所有到O'Reilly Media网页的链接添加特殊样式。避免给它们设置类名并基于类添加样式，可以简单地使用下面的规则：
+
+~~~cssa[href*="oreilly.com"] {font-weight: bold;}
+~~~
+
+当然，选择不限于使用`class`和`href`属性，任何属性都可以。`title`、`alt`、`src`、`id`……可以基于任何属性值的子串添加样式。下面的规则选择所有源文件URL中包含字符串“space”的图片：
+
+~~~css
+img[src*="space"] {border: 5px solid red;}
+~~~
+
+这种匹配方式是精确匹配——如果选择器中包含空白，属性值中必须包含空白才能匹配。当依赖的文档语言要求区分大小写时，属性名和值必须区分大小写。
 
 ###一个特别的属性选择类型
 ##使用文档结构
