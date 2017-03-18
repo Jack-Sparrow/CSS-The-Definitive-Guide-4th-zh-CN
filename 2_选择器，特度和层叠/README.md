@@ -707,7 +707,39 @@ img[src|="figure"] {border: 1px solid gray;}
 这个属性选择器最常用的场景是用来匹配语言代码值，我们将在本章后面的章节演示。
 
 ## 使用文档结构
+
+如前面所说，CSS之强大在于它利用文档结构决定（元素的）样式和样式作用于元素的方式，这似乎暗示这是CSS使用文档结构的唯一方式。结构确实在样式作用于文档时扮演了非常重要的角色，在继续讨论更强大的选择形式之前，我们先来讨论结构。
+
 ### 理解父-子关系
+
+为了理解选择器和文档之间的关系，我们要再次回顾文档结构是如何组织的，看下面这个非常简单的HTML文档：
+
+~~~html
+<html> 
+  <head>    <base href="http://www.meerkat.web/">    <title>Meerkat Central</title> </head>  <body>    <h1>Meerkat <em>Central</em></h1>    <p>      Welcome to Meerkat <em>Central</em>, the <strong>best meerkat web site on <a href="inet.html">the <em>entire</em> Internet</a></strong>!
+    </p> 
+    <ul>      <li>We offer: 
+        <ul>          <li><strong>Detailed information</strong> on how to adopt a meerkat</li> 
+          <li>Tips for living with a meerkat</li>          <li><em>Fun</em> things to do with a meerkat, including:            <ol>              <li>Playing fetch</li> 
+              <li>Digging for food</li> 
+              <li>Hide and seek</li>            </ol> 
+          </li>         </ul>
+      </li>      <li>...and so much more!</li>    </ul>    <p>Questions? <a href="mailto:suricate@meerkat.web">Contact us!</a> </p>  </body> 
+</html>
+~~~
+
+CSS的能力很大程度基于于元素的**父-子关系**。HTML文档（事实上绝大部分结构化文档）基于元素层级结构，构成文档的“树状”视图（见图1-15）。在这种层级结构中，每个元素都处在整个文档结构中的某个适当位置上，每个元素都是其他元素的**父**或者**子**，常常既是父又是子。
+
+![图1-15：文档树结构](figure1-15.png)
+
+*图1-15：文档树结构*
+
+在文档层级结构中，如果一个元素在另一个元素的紧邻的上方，就被称作那个元素的父元素。例如，在图1-15中，第一个`p`元素是`em`和`strong`元素的父元素，同时`strong`是一个锚点（`a`）元素的父元素，这个`a`元素又是另一个`em`元素的父元素。反过来，如果在文档层级中，一个元素在另一个元素的紧邻的下方，就被称作那个元素的子元素。因此，图1-15中的锚点元素是`strong`元素的子元素，`strong`元素又是`p`元素的子元素，等等。
+
+“父”和“子”是**祖先**和**后代**的特例。它们的区别是：在树状视图中，如果一个元素在另一个元素上面一级，那么它们是父-子关系。如果一个元素到另一个元素的路径有两级或者更多，那么它们是祖先-后代关系，但不是父-子关系。（当然，子也是后代，同时父也是祖先。）在图1-15中，第一个`ul`元素是两个`li`元素的父元素，同时也是它的`li`元素所有后代元素的祖先元素，直到嵌套路径最深的`li`元素。
+
+同时，在图1-15中，存在一个锚点元素既是`strong`元素的子元素，又是`p`、`body`和`html`元素的后代元素。`body`元素是浏览器默认显示的所有元素的祖先元素，`html`是整个文档中所有其他元素的祖先元素。因此，`html`元素也被叫做**根元素**。
+
 ### 后代选择器
 ### 选择子元素
 ### 选择相邻兄弟元素
