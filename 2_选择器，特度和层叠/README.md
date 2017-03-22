@@ -852,7 +852,68 @@ h1 > strong {color: red;}
 在同一个选择器中可以结合使用后代选择器和子元素原则器。`table.summary td > p`选择是`td`元素子元素的`p`元素，同时这个`td`元素需要是一个`class`属性值为`summary`的`table`元素的后代元素。
 
 ### 选择相邻兄弟元素
+
+假如想要为一个紧跟着标题的段落设置样式，或者给一个紧跟着段落的列表添加一个边距，可以使用**相邻兄弟组合器**来选择在同一个父级元素下紧跟着另一个元素的元素，组合器使用加号（`+`）。就像子级选择器一样，这个符号也可以在两边添加或省略空格。
+
+移除一个紧跟`h1`元素的段落的上边距：
+
+~~~css
+h1 + p {margin-top: 0;}
+~~~
+
+选择器读作：“选择任何紧跟在`h1`元素后面的`p`元素”。
+
+看图1-20的文档树片段，更清晰地观察这个选择器是如何生效的：
+
+![图1-20：一个文档树片段](figure1-20.png)
+
+*图1-20：一个文档树片段*
+
+在这个片段中有两个列表都是`div`元素的后代，一个是有序列表，另一个是无序列表，每个都包含三个列表项。两个列表互为相邻兄弟，每个列表中的列表项也互为相邻兄弟，但第一个列表中的项与第二个列表中的列**不是**相邻兄弟，因为它们没有共同的父元素。（它们最多是表兄弟元素，但CSS没有表兄弟元素选择器。）
+
+选择后面的两个相邻兄弟只需要一个组合器符号，如果写作`li + li {font-weight: bold;}`,只有每个列表中的第二项和第三项会被设置为粗体，样式不会对第一项生效。见图1-21.
+
+![图1-21：选择相邻兄弟元素](figure1-21.png)
+
+*图1-21：选择相邻兄弟元素*
+
+CSS的正确性依赖于两个元素的“代码顺序“。在上面的例子中，一个`ol`元素后面紧跟着一个`ul`元素，因此可以使用`ol + ul`选择第二个（`ul`）元素，但不能选择第一个（`ol`）元素。如果想使`ul + ol`匹配，需要一个`ol`元素紧跟在一个`ul`元素后面。
+
+需要记住，两个元素之间的文本内容**不会**影响相邻元素组合器。下面的代码片段，树视图与图1-19是一样的：
+
+~~~html
+<div>  <ol>    <li>List item 1</li>    <li>List item 1</li>    <li>List item 1</li>  </ol>  This is some text that is part of the 'div'. 
+  <ul>    <li>A list item</li>    <li>Another list item</li>    <li>Yet another list item</li>  </ul></div>
+~~~
+
+尽管两个列表之间有文本内容，选择器`ol + ul`依然会匹配第二个列表。因为文本并不包含一个兄弟元素，而是属于父元素`div`的一部分。如果把文本内容用一个段落元素（`p`）包起来，`ol + ul`匹配第二个列表的行为将会被终止。要匹配第二个列表，需要用`ol + p + ul`这样的选择器。
+
+相邻兄弟组合器可以与其它组合器连接使用，例如：
+
+~~~css
+html > body table + ul{margin-top: 1.5em;}
+~~~
+
+这个选择器是指：“选择任何紧跟`table`元素的兄弟`ul`元素，同时这个`table`元素是一个`body`元素的后代，而`body`元素是一个`html`的子元素。”
+
+和所有组合器一样，相邻兄弟选择器可以用于很复杂的选择器中，如`div#content h1 + div ol`。这个选择器是：“选择任何是`div`元素后代的`ol`元素，同时这个`div`元素是一个`h1`元素的紧邻兄弟元素，而这个`h1`元素是一个`id`属性值为`content`的`div`元素的子元素。”
+
 ### 选择跟随兄弟元素
+
+Selectors Level 3引入了一个新的兄弟组合器叫做**一般兄弟选择器**。这个组合器允许选择同一个父元素下，跟随（不一定是紧跟随）在某个元素后面的所有元素，使用波浪线符号（`~`）。
+
+如下例，为同一个父元素下跟随在一个`h2`元素后面的任何`ol`元素设置斜体，可以写作`h2 ~ ol {font-style: italic;}`。两个`ol`元素不必都是紧邻兄弟，尽管是紧邻兄弟的话也会被这条规则匹配。效果见图1-22.
+
+~~~html
+<div>  <h2>Subheadings</h2>  <p>It is the case that not every heading can be a main heading. Some headings must be subheadings. Examples include:</p>  <ol>    <li>Headings that are less important</li>    <li>Headings that are subsidiary to more important headlines</li>    <li>Headings that like to be dominated</li>  </ol>  <p>Let's restate that for the record:</p>  <ol>    <li>Headings that are less important</li>    <li>Headings that are subsidiary to more important headlines</li>    <li>Headings that like to be dominated</li>  </ol></div>
+~~~
+
+![图1-22：选择跟随兄弟元素](figure1-22.png)
+
+*图1-22：选择跟随兄弟元素*
+
+如图所示，两个有序列表都是斜体，因为两个`ol`元素都在`h2`元素后面，且它们（三个）共有一个父元素（`div`）。
+
 ## 伪类选择器
 ### 组合伪类
 ### 结构性伪类
