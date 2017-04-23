@@ -1057,6 +1057,205 @@ section > h2:only-of-type {font-size: 240%;}
 
 #### 选择第一个和最后一个子元素
 
+一个很常见的场景是，给某个元素的第一个或最后一个子元素添加特殊样式。最常见的例子是为一个导航栏的链接添加样式，为第一个或最后一个（或两者都）设置特别的视觉效果。过去需要为元素添加特殊的`class`，现在可以使用伪类来设置。
+
+伪类`:first-child`用来选择某个元素的第一个子元素，看下面的代码：
+
+~~~html
+<div>  <p>These are the necessary steps:</p>  <ul>    <li>Insert key</li>    <li>Turn key <strong>clockwise</strong></li>    <li>Push accelerator</li>  </ul>  <p>Do <em>not</em> push the brake at the same time as the accelerator. </p></div>
+~~~
+
+在这个例子中，是第一个子元素的元素是：第一个`p`、第一个`li`,以及`strong`和`em`元素。使用下面两条规则：
+
+~~~css
+p:first-child {font-weight: bold;}  
+li:first-child {text-transform: uppercase;}
+~~~
+
+会得到如图1-27的结果：
+
+![图1-27：给第一个子元素添加样式](figure1-27.png)
+
+*图1-27：给第一个子元素添加样式*
+
+第一条规则把所有是其他元素第一个子元素的`p`设置为粗体，第二条规则把所有是其他元素（在HTML中，必须是`ol`或`ul`元素）第一个子元素的`li`设置为大写格式。
+
+像前面提到的哪有，最常见的错误是以为`p:first-child`会选择`p`元素的第一个子元素。记住伪类的本质，是为伪类绑定的元素添加一些影子类，假设把这些影子类真的添加代码里，看起来将会是这样：
+
+~~~html
+<div>  <p class="first-child">These are the necessary steps:</p>  <ul>    <li class="first-child">Insert key</li>    <li>Turn key <strong class="first-child">clockwise</strong></li>    <li>Push accelerator</li>  </ul>  <p>Do <em class="first-child">not</em> push the brake at the same time as the accelerator.</p></div>
+~~~
+
+因此，要选择是其他元素第一个子元素的`em`元素，应该使用`em:first-child`。
+
+与`first-child`对应的是`:last-child`。使用前面的例子，修改一下样式中的伪类，结果见图1-28.
+
+~~~css
+p:last-child {font-weight: bold;}  
+li:last-child {text-transform: uppercase;}
+~~~
+
+~~~html
+<div>  <p>These are the necessary steps:</p>  <ul>    <li>Insert key</li>    <li>Turn key <strong>clockwise</strong></li>    <li>Push accelerator</li>  </ul>  <p>Do <em>not</em> push the brake at the same time as the accelerator. </p></div>
+~~~
+
+![图1-28：给最后一个子元素添加样式](figure1-28.png)
+
+*图1-28：给最后一个子元素添加样式*
+
+第一条规则把是其他元素最后一个子元素的`p`设为粗体，第二条规则把所有是其他元素子元素的`li`元素设置为大写格式。如果想要选择最后一个段落中的`em`，可以使用`p:last-child em`，它将会选择所有是`p`元素后代的`em`，同时这个`p`是其他元素的最后一个子元素。
+
+另外，两个伪类可以结合起来成为`:only-child`选择器的另一个版本，下面的两条规则选择相同的元素：
+
+~~~css
+p:only-child {color: red;}  
+p:first-child:last-child {background: red;}
+~~~
+
+设置段落前景色和背景色为红色（不是个好主意）。唯一的区别是特度，我们将在本章后面讨论。
+
+#### 选择第一个和最后一个特定类型的元素
+
+以选择第一个和最后一个子元素的形式，同样可以选择元素中第一个某种类型的子元素。这种方式可以实现选择某个元素中的第一个`table`元素，而不必关心它前面有哪些其他元素。
+
+~~~css
+table:first-of-type {border-top: 2px solid gray;}
+~~~
+
+这条规则并**不是**作用于整个文档的——并不是选择整个文档的第一个`table`然而忽略其他所有`table`。它只会选择某个子元素里有表格的元素中的第一个`table`元素，而忽略整个元素的子元素中的其他`table`。因此，在图1-29的文档结构里，被圈起来的节点是被选中的元素。
+
+![图1-29：选择第一个表格类型](figure1-29.png)
+*图1-29：选择第一个表格类型*
+
+在表格中，选择行中的第一个数据单元格而无论当前行中是否有头单元格存在：
+
+~~~css
+td:first-of-type {border-left: 1px solid red;}
+~~~
+
+这条规则会选择下面每个行中的第一个数据单元格：
+
+~~~html
+<tr><th scope="row">Count</th><td>7</td><td>6</td><td>11</td></tr>  
+<tr><td>Q</td><td>X</td><td>-</td></tr>
+~~~
+
+相比之下，`td:first-child`会选择第二行中的第一个`td`元素，但不会选择第一行中的元素。
+
+相对应的是`:last-of-type`，选择兄弟元素中某个类型的最后一个元素。与`:first-of-type`一样，只是它从最后一个元素向第一个元素找。在图1-30的文档结构中，被圈起来的节点是选中的元素。
+
+![图1-30：选择第一个表格类型](figure1-30.png)
+*图1-30：选择第一个表格类型*
+
+与在`:first-of-type`中提醒的一样，选择元素是在兄弟元素之间，而不是整个文档，亦即每个元素下的子元素集合是分别考虑的，`:last-of-type`分别选择每个子元素集合中的最后一个特定类型的元素。
+
+与前面说的一样，这两个伪类元素（`:first-of-type`、`:last-of-type`）结合起来成为`:only-of-type`的另一个版本，下面的两个规则选择相同的元素：
+
+~~~css
+table:only-of-type{color: red;} 
+table:first-of-type:last-of-type {background: red;}
+~~~
+
+#### 选择第 n 个子元素
+
+既然能选择第一个子元素、最后一个子元素、唯一的子元素，如何选择第二个子元素、第三个子元素、第九个子元素？为了避免定义无限多个伪类名称，CSS使用`:nth-child()`伪类。通过将整数或简单的算术表达式填充到括号中，可以选择任意任意编号的子元素。
+
+我们先从一个与`:first-child`等价的`:nth-child()`伪类开始，既：`:nth-child(1)`。下面的例子中，被选中的元素的第一个段落和第一个列表项。
+
+~~~css
+p:nth-child(1) {font-weight: bold;} 
+li:nth-child(1) {text-transform: uppercase;}
+~~~
+
+~~~html
+<div>  <p>These are the necessary steps:</p>  <ul>    <li>Insert key</li>    <li>Turn key <strong>clockwise</strong></li>    <li>Push accelerator</li>  </ul>  <p>Do <em>not</em> push the brake at the same time as the accelerator. </p></div>
+~~~
+
+如果把数字从`1`变成`2`，那么没有段落（`p`）被选中，中间的列表项（`li`）会被选中，如图1-31所示。
+
+~~~css
+p:nth-child(2) {font-weight: bold;} 
+li:nth-child(2) {text-transform: uppercase;}
+~~~
+
+![图1-31：为第二个元素添加样式](figure1-31.png)
+
+*图1-31：为第二个元素添加样式*
+
+当然，也可以填入任何证书，如果你要选择是某个元素的第93个子元素的一个有序列表，可以使用`ol:nth-child(93)`（不是指子元素集合中的第93个有序列表，见下一节）。
+
+更有用的是，你可以使用简单的算术表达式如`an + b`或`an - b`来定义循环选择，其中`a`和`b`是整数，`n`表示它自己。另外，`+ b`或`- b`的部分如果用不到的话可以去掉。
+
+假如在一个无序列表中，每三个元素选择第一个，从整个列表的第一项开始，样式可以这样写：
+
+~~~css
+ul > li:nth-child(3n + 1) {text-transform: uppercase;}
+~~~
+
+![图1-32：为每三个列表项中的第一个设置样式](figure1-32.png)
+
+*图1-32：为每三个列表项中的第一个设置样式*
+
+这种方式中的`n`可以是0、1、2、3、4、……知道无限大。浏览器会把`3n + 1`处理成1、4、7、10、13、……等等。如果去掉`+ 1`只留下`3n`，结果将是0、3、6、9、12、……等等。因为列表项中没有第0项——所有的元素计数都是从1开始，与数组计数不一样——第一个被这个表达式选中的元素将是列表的第三项。
+
+元素从1开始计数，因此`:nth-child(2n)`将会选中第偶数个子元素，而`nth-child(2n + 1)`或`nth-child(2n - 1)`会选择第奇数个子元素。你可以记住这两个公式，或者使用另外两个可用于`:nth-child()`的特殊关键字：`even`和`odd`。想从表格的第一行开始每隔一行设置高亮？可以像这样，效果见图1-33。
+
+~~~css
+tr:nth-child(odd) {background: silver;}
+~~~
+
+![图1-33：为表格每隔一行设置样式](figure1-33.png)
+
+*图1-33：为表格每隔一行设置样式*
+
+显然，其他更复杂的选择需要使用表达式`an + b`。
+
+要注意，当你想使用负数的`b`时，必须把加号去掉，否则整个选择器都将失效。下面的两条规则，只有第一条有效，第二条将会被解析器忽略：
+
+~~~css
+tr:nth-child(4n - 2) {background: silver;}  
+tr:nth-child(3n + −2) {background: red;}
+~~~
+
+如你所愿，有一个对应的伪类`:nth-last-child()`，它与`:nth-child()`效果是一样的，除了是从最后一个元素开始直到第一个元素。如果你想在表格中每隔一行设置高亮，同时需要保证最后一行是高亮的，下面的两条规则可以任选一个：
+
+~~~css
+tr:nth-last-child(odd) {background: silver;} 
+tr:nth-last-child(2n+1) {background: silver;} /* equivalent */
+~~~
+
+只要符合算术规则，每个元素都可以被既被`:nth-child()`又被`:nth-last-child()`选中，下面的规则，效果显示在图1-34中：
+
+~~~css
+li:nth-child(3n + 3) {border-left: 5px solid black;} 
+li:nth-last-child(4n - 1) {border-right: 5px solid black;}
+~~~
+
+![图1-34：同时使用 :nth-child 和 :nth-last-child](figure1-34.png)
+
+*图1-34：同时使用 :nth-child 和 :nth-last-child*
+
+可以把伪类选择器写在一起：`:nth-child(1):nth-last-child(1)`，结合成一个啰嗦版的`:only-child`。除了要创建一个特度更高的选择器，否则没有什么理由这样写，但这确实是一个可选项。
+
+#### 选择第 n 个特定类型的子元素
+
+类似之前的模式，`:nth-child()`和`:nth-last-child()`伪类存在类似的两个选择器：`:nth-of-type()`和`:nth-last-of-type()`。例如，在一个段落中，每隔一个选择链接子元素，从第二个开始选择，可以使用`p > a:nth-of-type(even)`。这个选择器将会忽略所有其他元素（`span`、`strong`等）而只考虑链接元素，见图1-35：
+
+~~~css
+p > a:nth-of-type(even) {background: blue; color: white;}
+~~~
+
+![图1-35：选择第偶数个链接](figure1-35.png)
+
+*图1-35：选择第偶数个链接*
+
+如果想从最后一个链接开始选择，使用`p > a:nth-last-of-type(even)`即可。
+
+还是像之前说过的一样，这些选择器是在兄弟元素中选择，而不是整个文档。每个元素都有它自己的兄弟元素集合，选择行为发生在每个分组里面。
+
+还有，你也许想过，两个选择器结合在一起`:nth-of-type(1):nth-last- of-type(1)`会生成一个特度（优先级）更高的`:only-of-type`选择器。（我们真的会在本书稍后解释，我保证。）
+
+
 ### 动态伪类
 ### UI状态伪类
 ### `:target`伪类
