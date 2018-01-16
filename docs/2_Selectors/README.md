@@ -1266,9 +1266,12 @@ p > a:nth-of-type(even) {background: blue; color: white;}
 ### `:target`伪类
 ### `:lang`伪类
 ### 否定伪类
+
 ## 伪元素选择器
+
 ### 样式化第一个字母
 ### 样式化第一行
 ### `::first-letter`和`::first-line`的限制
 ### 在元素之前或之后样式化（或创建）内容
+
 ## 总结
