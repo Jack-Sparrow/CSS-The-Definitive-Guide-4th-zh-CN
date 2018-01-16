@@ -9,7 +9,7 @@
 CSS的标准更新非常快，本书的第一章写于2012年，现在来看有些内容已经略有落后，而等到第四版的中文版引入国内时，又不知何年何月了。
 
 
-请见：[https://jack-sparrow.gitbooks.io/css/](https://jack-sparrow.gitbooks.io/css/)
+请见：[https://css.falselive.cn/](https://css.falselive.cn/)
 
 
 ### Update:
