@@ -367,6 +367,174 @@ _**等价的技术存在于通用脚本语言中，如PHP和IIS，这两种语�
 
 `style`属性通常不建议使用，实际上它也不大可能出现在HTML之外的XML语言中。当把样式放置在`style`属性中时，许多CSS的主要优势——例如将整个文档或服务器的所有文档的样式集中组织的能力——便无法有效发挥了。从许多方面来说，使用行内样式并不比使用`font`标签好多少，尽管处理视觉效果的时候它确实（比`font`标签）更灵活。
 
+## 样式表内容
+
+那么，样式表的内容到底是什么样呢？像这样：
+
+~~~css
+h1 {color: maroon;}body {background: yellow;}
+~~~
+
+各种各样的嵌入样式表都是有这样的内容组成，无论内容长短，简单还是复杂。很少有文档的`style`元素不包含任何规则——尽管有的文档可能只包含一个简单的`@import`声明列表而没有像上面那样的真正的规则。
+
+在开始本书的其它内容之前，我们首先需要确认样式表中能包含哪些东西，以及不能包含哪些东西。
+
+### 标记
+
+**样式表中没有标记。**这似乎是显而易见的，但可能会让你惊讶的是，有一个HTML注释标记是例外，因为历史原因它允许存在于`style`元素中：
+
+~~~html
+<style type="text/css"><!-- 
+h1 {color: maroon;}body {background: yellow;} 
+--></style>
+~~~
+
+就这样。
+
+### 规则结构
+
+我们把结构分解，详细地说明规则的概念。
+
+每条规则由两个基本部分构成：**选择器**和**声明块**。声明块由一个或多个**声明**组成，每个声明是一个**属性-值**对。每个样式表都是由一系列规则组成的。图7展示了规则：
+
+![图7：规则的结构](figure7.png)
+
+*图7：规则的结构*
+
+规则左侧的选择器，定义了文档中的哪些部分这条规则影响。图7中选择了`h1`元素，如果选择器是`p`，那所有的`p`（段落）元素将会被选择。
+
+规则右侧是由一或多个声明组成的声明块。每个声明都由一个CSS属性和这个属性的取值组成。在图7中，声明块包含两个声明。第一个会使受影响的那部分文档的`color`属性值为`red`，第二个会使受影响的那部分文档的`background`属性值为`yellow`。因此，文档中所有的`h1`元素（由选择器决定）都会被设置为红色文字和黄色背景。
+
+#### 厂商前缀
+
+有时你会看到CSS中存在像`-o-border-image`这样在前面带着短线和标签的声明。这被称作**厂商前缀（vendor prefixes）<sup id="a10">[10](#f10)</sup>**，浏览器厂商在提供试验性或专有（或两者）功能时，用它来标记属性、值或其他CSS内容。到2012年中已经有了很多厂商前缀，表1中列出了最常见的几种。
+
+*表1： 一些常见的厂商前缀*
+
+|前缀|厂商|
+|:----|:-----
+|-epub-|国际数字出版论坛epub格式
+|-moz-|基于Mozilla的浏览器（如：Firefox）
+|-ms-|Microsoft Internet Explorer
+|-o-|基于Opera的浏览器
+|-webkit-|基于WebKit的浏览器（如：Safari和Chrome）
+
+如表1所示，厂商前缀的通常格式是短线-标签-短线，尽管有些（厂商的）前缀错误地省略了第一个短线。
+
+厂商前缀的使用以及其后的滥用是一个漫长而又曲折的过程，讲述它超出了本书的范围。我们只需知道，它们一开始是作为厂商测试新功能的一种方式，从而有助于加速（不同浏览器之间）的互通性，而不至于被其它不能兼容的旧浏览器禁锢脚步。这避免了一系列问题，使得CSS幸免于在初期就被扼杀的厄运。然而不幸的是，随后前缀属性被web开发者无所顾忌地配置，最终导致了一系列新的问题。到撰写本文时，厂商前缀的未来受到了广泛的质疑，它们很可能在几年内被弃用。
+
+请记住，无论何时都要谨慎地处理前缀CSS，使用之前在每种浏览器上测试它们各自的前缀。
+
+### 空格处理
+
+虽然有些例外，但基本上CSS对规则间的空格不敏感，对规则内的空格则更加不敏感。
+
+一般来说，CSS处理空格的方式类似HTML：任何空格字符的序列都被当做单个空格解析。因此，一个假想的`rainbow`规则可以格式化为下面的格式：
+
+~~~css
+rainbow:infrared red orange yellow green blue indigo violet ultraviolet; 
+rainbow:	infrared red orange yellow green blue indigo violet ultraviolet;  
+rainbow:	infrared 
+	red	orange 
+	yellow 
+	green	blue 
+	indigo 
+	violet 
+	ultraviolet 
+	;
+~~~
+
+以及其他你能想到的分隔模式。唯一的限制是分割字符需要是空白：空格、tab符、换行符，单个还是组合使用，随你喜欢。
+
+类似地，你可以使用空白把一系列样式规则按照任何你偏好的风格格式化，这是无限多种可能中的五种格式：
+
+~~~css
+html{color:black;}body {background: white;} 
+p{	color: gray;} 
+h2 {	color : silver ; 
+	}ol 
+	{		color 
+			:		silver 
+			;}
+~~~
+
+在第一条规则中，空白被最大化地略去了。这种情况通常发生在CSS“压缩”的时候，这时会把不影响语义的空格全部删除。前两条之后的规则逐渐加入更多空白，到最后一条规则，几乎每个可以被分隔的地方都被分开了。
+
+以上的每种方式都是合法的，因此你应该选择一种最有意义的格式，即在你看来最易读的格式，然后坚持一贯地使用它。
+
+有些地方是确切地需要空白的，最常见的例子是在属性值中分隔关键字列表，例如上面的假想rainbow例子中。这些地方必须用空白来分隔。
+
+### 媒体块
+
+如果需要将特定媒体下的规则嵌入样式表中（而不是使用`media`属性或`@import`声明把媒体特性用于整个样式表），可以使用`@media`块。像这样：
+
+~~~css
+h1 {color: maroon;} 
+@media projection {	body {background: yellow;} 
+}
+~~~
+
+在这个例子中，`h1`元素会在所有媒中都显示为栗色，但`body`元素仅会在投影媒体上被设置为黄色背景。
+
+可以在一个样式表中加入许多`@media`块，每个拥有自己的媒体描述符（在后面的章节中详细介绍）。如果你愿意，甚至可以把所有规则封装进一个`@media`模块：
+
+~~~css
+@media all {	h1 {color: maroon;}	body {background: yellow;} 
+}
+~~~
+
+但是由于这种写法与去掉第一行和最后一行之后的写法没有什么区别，因此这么做没有什么意义。
+
+_**本节中的缩进仅仅是为了显示得更清晰，你不需要遵守`@media`块中的缩进规则，但这样做是推荐的，因为它可以使你的CSS更易于阅读。**_
+
+### CSS注释
+
+CSS是允许添加注释的。与C/C++中用`/*`和`*/`包裹的注释类似：
+
+~~~css/* This is a CSS1 comment */
+~~~
+
+象C++中一样，注释可以连续多行：
+
+~~~css
+/* This is a CSS1 comment, and 
+it can be several lines long without 
+any problem whatsoever. */
+~~~
+
+要记住，CSS注释不允许嵌套，像这样是不正确的：
+
+~~~css
+/* This is a comment, in which we find 
+another comment, which is WRONG/* Another comment */and back to the first comment */
+~~~
+
+当然，没人想要嵌套注释，所以这个限制没什么要紧的。
+
+_**一个可能会创建了“嵌套”注释的场景是，当想要把样式表中一大块包含了注释的代码临时注释掉时。因为CSS不允许嵌套注释，“外层”注释会在“内层”注释结束的时候就结束了。**_
+
+不妙的是，CSS中没有行注释符，如`//`和`#`（这个字符是ID选择器的保留字）。`/* */`是唯一的CSS注释方式。因此，如果你想要把注释放置在规则的同一行，就要小心放置的方式，例如，这是正确的方式：
+
+~~~css
+h1 {color: gray;} /* This CSS comment is several lines */ 
+h2 {color: silver;} /* long, but since it is alongside */ 
+p {color: white;} /* actual styles, each line needs to */ 
+pre {color: gray;} /* be wrapped in comment markers. */
+~~~
+
+这个例子里，如果单行注释没有关闭，会导致大部分样式表变成注释的一部分，也就不能生效了：
+
+~~~css
+h1 {color: gray;} /* This CSS comment is several lines 
+h2 {color: silver;} long, but since it is not wrapped 
+p {color: white;} in comment markers, the last three 
+pre {color: gray;} styles are part of the comment. */
+~~~
+
+在这个例子中，只有第一行规则（`h1 {color: gray;}`）会被应用于文档。其它的则被浏览器的渲染引擎当做注释的一部分而忽略掉了。
+
+_**CSS注释会被CSS解析器当做不存在一样，也不会当做空白处理，这意味着你可以把注释放进规则中间，甚至放在声明里！<sup id="a11">[11](#f11)</sup>**_
+
 ## 媒体查询
 
 通过媒体查询，开发者可以定义不同媒体环境中浏览器可以使用的样式表。过去，这是通过使用`media`属性来为`link`元素或`style`元素设置媒体类型，以及通过`@import`或`@media`声明的媒体描述符来处理的。现在媒体查询使这个概念更进一步，允许开发者通过使用所谓的媒体描述符，基于给定媒体类型的特性来选择样式表。
@@ -535,174 +703,6 @@ _**等价的技术存在于通用脚本语言中，如PHP和IIS，这两种语�
 
 - <分辨率>  
 分辨率值是正整数，后跟单位标识符dpi（每英寸点数）或dpcm（每厘米点数）。在CSS术语中，“点”可以是任何显示单位，其中常见的是像素。 整数值和标识符之间不允许有空格。 因此，一个每英寸正好具有150个像素（点）的显示器与值`150dpi`匹配。
-
-## 样式表内容
-
-那么，样式表的内容到底是什么样呢？像这样：
-
-~~~css
-h1 {color: maroon;}body {background: yellow;}
-~~~
-
-各种各样的嵌入样式表都是有这样的内容组成，无论内容长短，简单还是复杂。很少有文档的`style`元素不包含任何规则——尽管有的文档可能只包含一个简单的`@import`声明列表而没有像上面那样的真正的规则。
-
-在开始本书的其它内容之前，我们首先需要确认样式表中能包含哪些东西，以及不能包含哪些东西。
-
-### 标记
-
-**样式表中没有标记。**这似乎是显而易见的，但可能会让你惊讶的是，有一个HTML注释标记是例外，因为历史原因它允许存在于`style`元素中：
-
-~~~html
-<style type="text/css"><!-- 
-h1 {color: maroon;}body {background: yellow;} 
---></style>
-~~~
-
-就这样。
-
-### 规则结构
-
-我们把结构分解，详细地说明规则的概念。
-
-每条规则由两个基本部分构成：**选择器**和**声明块**。声明块由一个或多个**声明**组成，每个声明是一个**属性-值**对。每个样式表都是由一系列规则组成的。图7展示了规则：
-
-![图7：规则的结构](figure7.png)
-
-*图7：规则的结构*
-
-规则左侧的选择器，定义了文档中的哪些部分这条规则影响。图7中选择了`h1`元素，如果选择器是`p`，那所有的`p`（段落）元素将会被选择。
-
-规则右侧是由一或多个声明组成的声明块。每个声明都由一个CSS属性和这个属性的取值组成。在图7中，声明块包含两个声明。第一个会使受影响的那部分文档的`color`属性值为`red`，第二个会使受影响的那部分文档的`background`属性值为`yellow`。因此，文档中所有的`h1`元素（由选择器决定）都会被设置为红色文字和黄色背景。
-
-#### 厂商前缀
-
-有时你会看到CSS中存在像`-o-border-image`这样在前面带着短线和标签的声明。这被称作**厂商前缀（vendor prefixes）<sup id="a10">[10](#f10)</sup>**，浏览器厂商在提供试验性或专有（或两者）功能时，用它来标记属性、值或其他CSS内容。到2012年中已经有了很多厂商前缀，表1中列出了最常见的几种。
-
-*表1： 一些常见的厂商前缀*
-
-|前缀|厂商|
-|:----|:-----
-|-epub-|国际数字出版论坛epub格式
-|-moz-|基于Mozilla的浏览器（如：Firefox）
-|-ms-|Microsoft Internet Explorer
-|-o-|基于Opera的浏览器
-|-webkit-|基于WebKit的浏览器（如：Safari和Chrome）
-
-如表1所示，厂商前缀的通常格式是短线-标签-短线，尽管有些（厂商的）前缀错误地省略了第一个短线。
-
-厂商前缀的使用以及其后的滥用是一个漫长而又曲折的过程，讲述它超出了本书的范围。我们只需知道，它们一开始是作为厂商测试新功能的一种方式，从而有助于加速（不同浏览器之间）的互通性，而不至于被其它不能兼容的旧浏览器禁锢脚步。这避免了一系列问题，使得CSS幸免于在初期就被扼杀的厄运。然而不幸的是，随后前缀属性被web开发者无所顾忌地配置，最终导致了一系列新的问题。到撰写本文时，厂商前缀的未来受到了广泛的质疑，它们很可能在几年内被弃用。
-
-请记住，无论何时都要谨慎地处理前缀CSS，使用之前在每种浏览器上测试它们各自的前缀。
-
-### 空格处理
-
-虽然有些例外，但基本上CSS对规则间的空格不敏感，对规则内的空格则更加不敏感。
-
-一般来说，CSS处理空格的方式类似HTML：任何空格字符的序列都被当做单个空格解析。因此，一个假想的`rainbow`规则可以格式化为下面的格式：
-
-~~~css
-rainbow:infrared red orange yellow green blue indigo violet ultraviolet; 
-rainbow:	infrared red orange yellow green blue indigo violet ultraviolet;  
-rainbow:	infrared 
-	red	orange 
-	yellow 
-	green	blue 
-	indigo 
-	violet 
-	ultraviolet 
-	;
-~~~
-
-以及其他你能想到的分隔模式。唯一的限制是分割字符需要是空白：空格、tab符、换行符，单个还是组合使用，随你喜欢。
-
-类似地，你可以使用空白把一系列样式规则按照任何你偏好的风格格式化，这是无限多种可能中的五种格式：
-
-~~~css
-html{color:black;}body {background: white;} 
-p{	color: gray;} 
-h2 {	color : silver ; 
-	}ol 
-	{		color 
-			:		silver 
-			;}
-~~~
-
-在第一条规则中，空白被最大化地略去了。这种情况通常发生在CSS“压缩”的时候，这时会把不影响语义的空格全部删除。前两条之后的规则逐渐加入更多空白，到最后一条规则，几乎每个可以被分隔的地方都被分开了。
-
-以上的每种方式都是合法的，因此你应该选择一种最有意义的格式，即在你看来最易读的格式，然后坚持一贯地使用它。
-
-有些地方是确切地需要空白的，最常见的例子是在属性值中分隔关键字列表，例如上面的假想rainbow例子中。这些地方必须用空白来分隔。
-
-### 媒体块
-
-如果需要将特定媒体下的规则嵌入样式表中（而不是使用`media`属性或`@import`声明把媒体特性用于整个样式表），可以使用`@media`块。像这样：
-
-~~~css
-h1 {color: maroon;} 
-@media projection {	body {background: yellow;} 
-}
-~~~
-
-在这个例子中，`h1`元素会在所有媒中都显示为栗色，但`body`元素仅会在投影媒体上被设置为黄色背景。
-
-可以在一个样式表中加入许多`@media`块，每个拥有自己的媒体描述符（在后面的章节中详细介绍）。如果你愿意，甚至可以把所有规则封装进一个`@media`模块：
-
-~~~css
-@media all {	h1 {color: maroon;}	body {background: yellow;} 
-}
-~~~
-
-但是由于这种写法与去掉第一行和最后一行之后的写法没有什么区别，因此这么做没有什么意义。
-
-_**本节中的缩进仅仅是为了显示得更清晰，你不需要遵守`@media`块中的缩进规则，但这样做是推荐的，因为它可以使你的CSS更易于阅读。**_
-
-### CSS注释
-
-CSS是允许添加注释的。与C/C++中用`/*`和`*/`包裹的注释类似：
-
-~~~css/* This is a CSS1 comment */
-~~~
-
-象C++中一样，注释可以连续多行：
-
-~~~css
-/* This is a CSS1 comment, and 
-it can be several lines long without 
-any problem whatsoever. */
-~~~
-
-要记住，CSS注释不允许嵌套，像这样是不正确的：
-
-~~~css
-/* This is a comment, in which we find 
-another comment, which is WRONG/* Another comment */and back to the first comment */
-~~~
-
-当然，没人想要嵌套注释，所以这个限制没什么要紧的。
-
-_**一个可能会创建了“嵌套”注释的场景是，当想要把样式表中一大块包含了注释的代码临时注释掉时。因为CSS不允许嵌套注释，“外层”注释会在“内层”注释结束的时候就结束了。**_
-
-不妙的是，CSS中没有行注释符，如`//`和`#`（这个字符是ID选择器的保留字）。`/* */`是唯一的CSS注释方式。因此，如果你想要把注释放置在规则的同一行，就要小心放置的方式，例如，这是正确的方式：
-
-~~~css
-h1 {color: gray;} /* This CSS comment is several lines */ 
-h2 {color: silver;} /* long, but since it is alongside */ 
-p {color: white;} /* actual styles, each line needs to */ 
-pre {color: gray;} /* be wrapped in comment markers. */
-~~~
-
-这个例子里，如果单行注释没有关闭，会导致大部分样式表变成注释的一部分，也就不能生效了：
-
-~~~css
-h1 {color: gray;} /* This CSS comment is several lines 
-h2 {color: silver;} long, but since it is not wrapped 
-p {color: white;} in comment markers, the last three 
-pre {color: gray;} styles are part of the comment. */
-~~~
-
-在这个例子中，只有第一行规则（`h1 {color: gray;}`）会被应用于文档。其它的则被浏览器的渲染引擎当做注释的一部分而忽略掉了。
-
-_**CSS注释会被CSS解析器当做不存在一样，也不会当做空白处理，这意味着你可以把注释放进规则中间，甚至放在声明里！<sup id="a11">[11](#f11)</sup>**_
 
 ## 总结
 
