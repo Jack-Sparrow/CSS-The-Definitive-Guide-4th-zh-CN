@@ -9,7 +9,11 @@
 CSS的标准更新非常快，本书的第一章写于2012年，现在来看有些内容已经略有落后，而等到第四版的中文版引入国内时，又不知何年何月了。
 
 
-## Update:
+任何问题和反馈，欢迎到 [https://github.com/Jack-Sparrow/CSS-The-Definitive-Guide-4th-zh-CN](https://github.com/Jack-Sparrow/CSS-The-Definitive-Guide-4th-zh-CN)  讨论。
+
+
+
+### Update:
 
 英文正式版已于 2017 年 10 月正式出版：[O'Reilly 官网](http://shop.oreilly.com/product/0636920012726.do)
 
