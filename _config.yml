@@ -1,7 +1,3 @@
 theme: jekyll-theme-cayman
 plugins:
-   - jekyll-mentions
-   - jemoji
-   - jekyll-redirect-from
-   - jekyll-sitemap
-   - jekyll-feed
+   - github-cards
