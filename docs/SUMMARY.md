@@ -1,6 +1,6 @@
 # 目录
 
-* [前言](README.md)
+* [简介](README.md)
 * [第一章 CSS和文档](1_CSS_and_Documents/README.md)
 	* [Web样式历史简介](1_CSS_and_Documents/README.md#web样式历史简介)
 	* [元素](1_CSS_and_Documents/README.md#元素)
