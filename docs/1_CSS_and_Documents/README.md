@@ -66,7 +66,7 @@ CSS就是在这种背景下引入的，目的是提供一种简单的、声明�
 
 | | DISPLAY |
 | ---- | ----- |
-|取值| [ <display-outside> ‖ <display-inside> ] | <display-listitem> | <display-internal> | <display-box> | <display-legacy> |
+|取值| [ `<display-outside>` ‖ `<display-inside>` ] &#124; `<display-listitem>` &#124; `<display-internal>` &#124; `<display-box>` &#124; `<display-legacy>` |
 |定义|见下|
 |初始值|inline|
 |适用元素|所有元素|
@@ -81,7 +81,7 @@ CSS就是在这种背景下引入的，目的是提供一种简单的、声明�
 > flow | flow-root | table | flex | grid | ruby
 
 **`<display-listitem>`**
-> list-item && \<display-outside\>? && [ flow | flow-root ]?
+> list-item && `<display-outside`>? && [ flow | flow-root ]?
 
 **`<display-internal>`**
 > table-row-group | table-header-group | table-footer-group | table-row | table-cell | table-column-group | table-column | table-caption | ruby-base | ruby-text | ruby-base-container | ruby-text-container
