@@ -44,7 +44,7 @@ CSS就是在这种背景下引入的，目的是提供一种简单的、声明�
 
 ### 元素显示角色
 
-除了替换和费替换元素，CSS 还使用另外两种基本类型来区分元素：**块级（block-level）**和**行内级（inline-level）**。还有很多显示类型，但这两个是最基本的，也是绝大部分（如果不是全部）其他类型会涉及的类型。曾经花费时间在 HTML 标签和它们在web浏览器中显示上的开发者，对块级和行内类型不会陌生。元素在图1中展示。
+除了替换和非替换元素，CSS 还使用另外两种基本类型来区分元素：**块级（block-level）**和**行内级（inline-level）**。还有很多显示类型，但这两个是最基本的，也是绝大部分（如果不是全部）其他类型会涉及的类型。曾经花费时间在 HTML 标签和它们在web浏览器中显示上的开发者，对块级和行内类型不会陌生。元素在图1中展示。
 
 ![图1：HTML文档中的块级和行内元素](figure1.png)
 
@@ -66,7 +66,7 @@ CSS就是在这种背景下引入的，目的是提供一种简单的、声明�
 
 | | DISPLAY |
 |:----|:-----
-|取值|\[ \<display-outside\> ‖ \<display-inside\> \] \| \<display-listitem\> \| \<display-internal\> \| \<display-box\> \| \<display-legacy\>
+|取值|\[ <display-outside> ‖ <display-inside> \] \| <display-listitem> \| <display-internal> \| <display-box> \| <display-legacy>
 |定义|见下|
 |初始值|inline|
 |适用元素|所有元素|
@@ -74,22 +74,22 @@ CSS就是在这种背景下引入的，目的是提供一种简单的、声明�
 |继承|否|
 |动画|否|
 
-**\<display-outside\>**
+**<display-outside>**
 > block | inline | run-in
 
-**\<display-inside\>**
+**<display-inside>**
 > flow | flow-root | table | flex | grid | ruby
 
-**\<display-listitem\>**
+**<display-listitem>**
 > list-item && \<display-outside\>? && [ flow | flow-root ]?
 
-**\<display-internal\>**
+**<display-internal>**
 > table-row-group | table-header-group | table-footer-group | table-row | table-cell | table-column-group | table-column | table-caption | ruby-base | ruby-text | ruby-base-container | ruby-text-container
 
-**\<display-box\>**
+**<display-box>**
 > contents | none
 
-**\<display-legacy\>**
+**<display-legacy>**
 > inline-block | inline-list-item | inline-table | inline-flex | inline-grid
 
 你可能已经注意到了这里有许多取值，只有其中三个是我提到过的：`block`、`inline`和`list-item`。这些取值的大部分会在本书其他部分介绍；例如`grid`和`inline-grid`涵盖在介绍栅格布局的独立的一章，跟表格相关的值都包含在介绍 CSS 表格布局的章节中。
