@@ -65,7 +65,7 @@ CSS就是在这种背景下引入的，目的是提供一种简单的、声明�
 要了解其工作原理，我们来考虑一个CSS属性`display`：
 
 | | DISPLAY |
-|:----|:-----
+| ---- | ----- |
 |取值| [ <display-outside> ‖ <display-inside> ] | <display-listitem> | <display-internal> | <display-box> | <display-legacy> |
 |定义|见下|
 |初始值|inline|
