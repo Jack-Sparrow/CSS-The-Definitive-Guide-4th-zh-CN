@@ -66,7 +66,7 @@ CSS就是在这种背景下引入的，目的是提供一种简单的、声明�
 
 | | DISPLAY |
 |:----|:-----
-|取值|[ &lt;display-outside&gt; ‖ <display-inside> \] \| <display-listitem> \| <display-internal> \| <display-box> \| <display-legacy>
+|取值|{% raw %}[ &lt;display-outside&gt; ‖ <display-inside> ] | <display-listitem> \| <display-internal> \| <display-box> \| <display-legacy>{% endraw %}
 |定义|见下|
 |初始值|inline|
 |适用元素|所有元素|
