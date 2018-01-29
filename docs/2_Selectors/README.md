@@ -241,7 +241,7 @@ h1 {	font: 18px Helvetica;  	color: purple background: aqua;
 }
 ~~~
 
-因为`background:`并不是`color`属性的合法值，而且`color`属性只能有一个关键字，因此用户代理会完全忽略`color`声明（包括`background: aqua`的部分）。你可能认为浏览器至少会把`h1`设置成紫色字体但没有水色北京，但是如果浏览器本身的实现是正确的话，你会连紫色的`h1`也看不到，它们会被设置成默认颜色（通常是黑色）和透明背景（默认）。声明`font: 18px Helvetica`将会依然生效，因为它是以一个分号正确结束的。
+因为`background:`并不是`color`属性的合法值，而且`color`属性只能有一个关键字，因此用户代理会完全忽略`color`声明（包括`background: aqua`的部分）。你可能认为浏览器至少会把`h1`设置成紫色字体但没有水色背景，但是如果浏览器本身的实现是正确的话，你会连紫色的`h1`也看不到，它们会被设置成默认颜色（通常是黑色）和透明背景（默认）。声明`font: 18px Helvetica`将会依然生效，因为它是以一个分号正确结束的。
 
 _**虽然从技术上来讲，最后一条声明后面的分号并不是必需的，但通常为它加上分号是一个好的实践。首先，丢失分号是渲染错误的最常见的原因之一，遵循这个实践可以使你保持使用分号结束声明的良好习惯；其次，当你为样式规则追加一条声明的时候，不必担心前面的声明后面是否忘了插入分号；第三，如果你曾使用过像 Sass 这样的预处理器，通常尾部的分号对所有声明都是必需的。在每条声明后都跟随一个分号来避免上面的问题。**_
 
@@ -1449,15 +1449,162 @@ p > a:nth-of-type(even) {background: blue; color: white;}
 例如锚点元素（`a`）,它（在 HTML 或其它类似文档标准中）定义了从一个文档到另一个文档的链接。锚点一直是锚点，但一些锚点指向的是已经访问过的文档页面，而另一些指向未曾访问过的页面。通过 HTML 标签是无法分辨这种差异的，因为在文档标记中所有的锚点都是一样的。只有通过对比文档中的链接与用户浏览器中的历史记录才能判断两种基本的锚点类型：已访问过的和未曾访问的过的。
 
 ### UI状态伪类
+
+|Name|	Description|
+|:----|:------|
+|:enabled|Refers to user-interface elements (such as form elements) that are enabled; that is, available for input.|
+|:disabled|Refers to user-interface elements (such as form elements) that are disabled; that is, not available for input.|
+|:checked|Refers to radio buttons or checkboxes that have been selected, either by the user or by defaults within the document itself.|
+|:indeterminate|Refers to radio buttons or checkboxes that are neither checked nor unchecked; this state can only be set via DOM scripting, and not due to user input.
+|:default|Refers to the radio button, checkbox, or option that was selected by default.
+|:valid|Refers to a user input that meets all of its data validity semantics
+|:invalid|Refers to a user input that does not meet all of its data validity semantics
+|:in-range|Refers to a user input whose value is between the minimum and maximum values
+|:out-of-range|Refers to a user input whose value is below the minimum or above the maximum values allowed by the control
+|:required|Refers to a user input that must have a value set
+|:optional|Refers to a user input that does not need to have a value set
+|:read-write|Refers to a user input that is editable by the user
+|:read-only|Refers to a user input that is not editable by the user
+
+#### 可用和禁用的 UI 元素
+
+借助 DOM 脚本 和 HTML5， 可以把用户界面元素（或一组）设置为禁用（disabled）。
+
+未禁用的元素被定义为可用。
+
+使用 `:enabled` 和 `:disabled` 伪类选择两个状态。
+
+#### 选中状态
+
+类型为 “checkbox” 和 “radio” 的 input 元素，Selectors level 3 提供 `:checked`状态伪类，以及`unchecked`。`:interminate`伪类匹配既不是 checked 也不是 unchecked。只有 radio 和 checkbox 可以被 check。其他所有元素和这两个元素的未选中状态都是`:not(:checked)`。
+
+“interminate”状态只能被 DOM 脚本或用户代理设置。可以用来表示用户没有选中或者取消选中某个元素。
+
+#### 默认选项伪类
+
+`:default`伪类。同名 radio 中最初被设置为选中的匹配`:default`，即便用户修改了状态不再匹配 `:checked`时。checkbox 在页面一加载就选中，`:default` 匹配。`select` 元素初始选中的 `option` 匹配 `:default`。
+
+~~~css
+[type="checkbox"]:default + label { font-style: italic; }
+~~~
+
+~~~html
+<input type="checkbox" id="chbx" checked name="foo" value="bar">
+<label for="chbx">This was checked on page load</label>
+~~~
+
+#### 选项伪类
+
+`:required`匹配表单必填项，表示设置了 HTML5 的`required`属性。`:optional`表示没有`required`属性，或者`required`属性有值`false`。
+
+~~~css
+input:required { border: 1px solid #f00;}
+input:optional { border: 1px solid #ccc;}
+~~~
+
+~~~html
+<input type="email" placeholder="enter an email address" required>
+<input type="email" placeholder="optional email address">
+<input type="email" placeholder="optional email address" required="false">
+~~~
+
+第一个元素匹配`:required`，后面两个匹配`:optinal`。
+
+~~~css
+input[required] { border: 1px solid #f00;}
+input:not([required]) { border: 1px solid #ccc;}
+~~~
+
+不是表单 input 的元素既不是必选项也不是可选项。
+
+#### 合法性伪类
+
+`:valid` `:invalid`
+
+用于可验证数据合法性的元素，`div`永远不会匹配这两个选择器。
+
+_**这两个伪类由用户代理自己的样式系统决定，可能不会如你预期。例如 2017 年底在多个用户代理中，空的 email input 会匹配 `:valid`，尽快实际上 null 输入不是一个合法的 email 地址。除非验证的使用习惯改进，最好谨慎对待合法性伪类。 **_
+
+#### 范围伪类
+
+HTML5 的`min`和`max`属性。`:in-range`和`:out-of-range`伪类。
+
+#### 可变性伪类
+
+可编辑的 input。
+
+`:read-write`、`：read-only`
+
+For example, in HTML, a non-disabled, non-read-only input element is :read-write, as is any element with the contenteditable attribute. Everything else matches :read-only:
+
 ### `:target`伪类
+
+URL 中包含一个片段标识码，在 CSS 中叫做 *target*，可使用`:target`伪类为其添加样式。
+
+~~~
+http://www.w3.org/TR/css3-selectors/#target-pseudo
+~~~
+
+Thanks to :target, you can highlight any targeted element within a document, or you can devise different styles for various types of elements that might be targeted—say, one style for targeted headings, another for targeted tables, and so on.
+
+:target styles will not be applied in two circumstances:
+
+If the page is accessed via a URL that does not have a fragment identifier
+
+If the page is accessed via a URL that has a fragment identifier, but the identifier does not match any elements within the document
+
 ### `:lang`伪类
+
 ### 否定伪类
+
+Selector level 3 `:not()`
+
+括号中填写**简单选择器**，简单选择器在 W3C 的定义：类型选择器、通配选择器、属性选择器、类选择器、ID选择器或伪类中的一个。简单选择器是不包含祖先-后代关系的选择器。
 
 ## 伪元素选择器
 
+CSS2 定义了四个基本的微元素选择器，元素的第一个字母，元素的第一行，before 和 after。
+
 ### 样式化第一个字母
+
+~~~css
+p::first-letter {color: red;}
+~~~
+
 ### 样式化第一行
+
+~~~css
+p::first-letter {color: red;}
+~~~
+
 ### `::first-letter`和`::first-line`的限制
+
+只能用于块级元素，不能用于行内元素。允许使用的属性：
+
+|::first-letter|	::first-line|
+|-----|-----|
+|All font properties|All font properties
+|All background properties|All background properties
+|All text decoration properties|All margin properties
+|All inline typesetting properties|All padding properties
+|All inline layout properties|All border properties
+|All border properties|All text decoration properties
+|box-shadow|All inline typesetting properties
+|color|color
+|opacity|opacity
+
 ### 在元素之前或之后样式化（或创建）内容
 
+~~~css
+h2::before {content: "]]"; color: silver;}
+~~~
+
+~~~css
+body::after {content: "The End.";}
+~~~
+
 ## 总结
+
+By using selectors based on the document’s language, authors can create CSS rules that apply to a large number of similar elements just as easily as they can construct rules that apply in very narrow circumstances. The ability to group together both selectors and rules keeps stylesheets compact and flexible, which incidentally leads to smaller file sizes and faster download times.
+
+Selectors are the one thing that user agents usually must get right because the inability to correctly interpret selectors pretty much prevents a user agent from using CSS at all. On the flip side, it’s crucial for authors to correctly write selectors because errors can prevent the user agent from applying the styles as intended. An integral part of correctly understanding selectors and how they can be combined is a strong grasp of how selectors relate to document structure and how mechanisms—such as inheritance and the cascade itself—come into play when determining how an element will be styled.
