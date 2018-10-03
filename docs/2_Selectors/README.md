@@ -42,7 +42,8 @@ myElement {color: red;}
 
 ~~~css
 html {color: black;}  
-h1 {color: gray;}  h2 {color: silver;}
+h1 {color: gray;}  
+h2 {color: silver;}
 ~~~
 
 样式表的结果在图1-1中展示：
@@ -55,7 +56,8 @@ h1 {color: gray;}  h2 {color: silver;}
 
 ~~~css
 html {color: black;}  
-p {color: gray;}  h2 {color: silver;}
+p {color: gray;}  
+h2 {color: silver;}
 ~~~
 
 结果在图1-2中展示:
@@ -164,25 +166,33 @@ h3 {color: purple;}
 h4 {color: purple;}  
 h5 {color: purple;}  
 h6 {color: purple;}  
-h1, h2, h3, h4, h5, h6 {color: purple;}
+
+h1, h2, h3, h4, h5, h6 {color: purple;}
 ~~~
 
 分组允许做出一些有趣的选择，例如下面例子中的写法都是等效的，每个例子展示了一种分组选择器和声明的不同方式：
 
 ~~~css
-/* group 1 */h1 {color: silver; background: white;}  
+/* group 1 */
+h1 {color: silver; background: white;}  
 h2 {color: silver; background: gray;}  
 h3 {color: white; background: gray;}  
 h4 {color: silver; background: white;}  
 b {color: gray; background: white;}  
-/* group 2 */h1, h2, h4 {color: silver;} 
+
+/* group 2 */
+h1, h2, h4 {color: silver;} 
 h2, h3 {background: gray;} 
 h1, h4, b {background: white;} 
-h3 {color: white;}b {color: gray;}
+h3 {color: white;}
+b {color: gray;}
 
-/* group 3 */h1, h4 {color: silver; background: white;} 
+/* group 3 */
+h1, h4 {color: silver; background: white;} 
 h2 {color: silver;}
-h3 {color: white;}h2, h3 {background: gray;}b {color: gray; background: white;}
+h3 {color: white;}
+h2, h3 {background: gray;}
+b {color: gray; background: white;}
 ~~~
 
 每个例子都会生成图 1-4 显示的结果。（这些样式使用的分组声明，将在接下来的“分组声明”中探讨。）
@@ -207,7 +217,8 @@ CSS2 引入了一个新的简单选择器叫做**通配选择器**，使用星�
 
 ~~~css
 h1 {font: 18px Helvetica;}  
-h1 {color: purple;}  h1 {background: aqua;}
+h1 {color: purple;}  
+h1 {background: aqua;}
 ~~~
 
 但这种方式是低效的——想象一下为每个元素创建一个10或15个样式的列表！你可以把声明组合在一起来替代前面的写法：
@@ -221,9 +232,11 @@ h1 {font: 18px Helvetica; color: purple; background: aqua;}
 要注意分组来写的时候每条声明后面的分号至关重要。浏览器会忽略样式表中的空白，因此用户代理要依赖正确的语法来解析样式表。你可以这样格式化样式表：
 
 ~~~css
-h1 {	font: 18px Helvetica;  
+h1 {
+	font: 18px Helvetica;  
 	color: purple;  
-	background: aqua;}
+	background: aqua;
+}
 ~~~
 
 也可以通过移除不必要的空白压缩 CSS：
@@ -237,7 +250,9 @@ h1{font:18px Helvetica;color:purple;background:aqua;}
 如果第二个例子中漏掉了第二个分号，用户代理会把样式表理解成下面这样：
 
 ~~~css
-h1 {	font: 18px Helvetica;  	color: purple background: aqua; 
+h1 {
+	font: 18px Helvetica;  
+	color: purple background: aqua; 
 }
 ~~~
 
@@ -265,7 +280,13 @@ h1, h2, h3, h4, h5, h6 {color: gray; background: white; padding: 0.5em;
 这种方案比下面的方案更好：
 
 ~~~css
-h1 {color: gray;}  h2 {color: gray;}  h3 {color: gray;}  h4 {color: gray;}  h5 {color: gray;}  h6 {color: gray;}  h1 {background: white;}  
+h1 {color: gray;}  
+h2 {color: gray;}  
+h3 {color: gray;}  
+h4 {color: gray;}  
+h5 {color: gray;}  
+h6 {color: gray;}  
+h1 {background: white;}  
 h2 {background: white;}  
 h3 {background: white;}  
 ...
@@ -306,7 +327,9 @@ p {font-weight: bold;}
 忽略元素类型应用样式的最常用方式，是使用类选择器。但是在使用它们之前需要设置文档标记，以便选择器能够生效。添加`class`属性：
 
 ~~~html
-<p class="warning">When handling plutonium, care must be taken to avoid  the formation of a critical mass.</p>  <p>With plutonium, <span class="warning">the possibility of implosion is  
+<p class="warning">When handling plutonium, care must be taken to avoid  
+the formation of a critical mass.</p>  
+<p>With plutonium, <span class="warning">the possibility of implosion is  
 very real, and must be avoided at all costs</span>. This can be accomplished  
 by keeping the various masses separate.</p>
 ~~~
@@ -367,7 +390,8 @@ span.warning {font-weight: bold;}
 
 ~~~html
 <p class="urgent warning">When handling plutonium, care must be taken to 
-avoid the formation of a critical mass.</p><p>With plutonium, <span class="warning">the possibility of implosion is 
+avoid the formation of a critical mass.</p>
+<p>With plutonium, <span class="warning">the possibility of implosion is 
 very real, and must be avoided at all costs</span>. This can be accomplished
  by keeping the various masses separate.</p>
 ~~~
@@ -399,8 +423,6 @@ p.warning.help {background: red;}
 <p class="urgent warning help">Help me!</p>
 ~~~
 
-_**IE7以前的Internet Exlorer版本处理多类选择器有问题。在这些旧版本中，虽然可以选择列表中的单个类名，但对多个类名的选择无法正常生效。`p.warning`会按照预期生效，但` p.warning.help`会匹配任意一个`class`属性值列表中含有`help`的`p`元素。如果你使用`p.warning.help`，旧版本的IE会匹配任何一个`class`值列表中含有`warning`的`p`元素，而无论值中有没有`help`。**_
-
 ### ID选择器
 
 从某些方面说，ID 选择器和类选择器类似，但它们有一些重要区别。首先，ID 选择器使用井号（`#`）开头，一条规则可能是这样的：
@@ -413,10 +435,12 @@ _**IE7以前的Internet Exlorer版本处理多类选择器有问题。在这些�
 
 第二个区别是 ID 选择器（理所当然地）查找`id`属性而不是`class`属性的值。这是一个 ID 选择器生效的例子：
 
-~~~css*#lead-para {font-weight: bold;}
+~~~css
+*#lead-para {font-weight: bold;}
 ~~~
 
-~~~html<p id="lead-para">This paragraph will be boldfaced.</p>  
+~~~html
+<p id="lead-para">This paragraph will be boldfaced.</p>  
 <p>This paragraph will NOT be bold.</p>
 ~~~
 
@@ -460,7 +484,8 @@ _**在实际中，浏览器并不总会检查 HTML 中 ID 的唯一性。如果�
 p.criticalInfo {font-weight: bold;}
 ~~~
 
-~~~html<p class="criticalinfo">Don't look down.</p>
+~~~html
+<p class="criticalinfo">Don't look down.</p>
 ~~~
 
 因为字母`i`的大小写不一致，选择器不会匹配元素。
@@ -483,7 +508,8 @@ h1[class] {color: silver;}
 
 ~~~html
 <h1 class="hoopla">Hello</h1>  
-<h1>Serenity</h1>  <h1 class="fancy">Fooling</h1>
+<h1>Serenity</h1>  
+<h1 class="fancy">Fooling</h1>
 ~~~
 
 将得到如图1-9的结果：
@@ -555,7 +581,8 @@ planet[moons="1"] {font-weight: bold;}
 第二个元素的文本将会被设置为粗体，第一个和第三个不会：
 
 ~~~html
-<planet>Venus</planet>  <planet moons="1">Earth</planet>  
+<planet>Venus</planet>  
+<planet moons="1">Earth</planet>  
 <planet moons="2">Mars</planet>
 ~~~
 
@@ -569,7 +596,8 @@ a[href="http://www.w3.org/"][title="W3C Home"] {font-size: 200%;}
 
 ~~~html
 <a href="http://www.w3.org/" title="W3C Home">W3C</a><br />  
-<a href="http://www.webstandards.org"  title="Web Standards Organization">Standards Info</a><br />  
+<a href="http://www.webstandards.org"  
+title="Web Standards Organization">Standards Info</a><br />  
 <a href="http://www.example.org/" title="W3C Home">dead.link</a>
 ~~~
 
@@ -633,9 +661,11 @@ p[class="urgent warning"] {font-weight: bold;}
 这条规则会选择任何`lang`属性等于`en`或者以`en-`开头的元素。因此，下面的示例中前三个标签会被选中，而后两个则不会：
 
 ~~~html
-<h1 lang="en">Hello!</h1>  <p lang="en-us">Greetings!</p>  
+<h1 lang="en">Hello!</h1>  
+<p lang="en-us">Greetings!</p>  
 <div lang="en-au">G'day!</div>  
-<p lang="fr">Bonjour!</p> <h4 lang="cy-en">Jrooana!</h4>
+<p lang="fr">Bonjour!</p> 
+<h4 lang="cy-en">Jrooana!</h4>
 ~~~
 
 一般来说，`[att|="val"]`的格式可以用于任何属性和属性值。如果HTML文档中有一系列图片，文件名都像**“figure-1.gif”**和**“figure-3.jpg”**这样，可以使用这样的选择器匹配所有这样的图片：
@@ -709,7 +739,8 @@ img[title~="Figure"] {border: 1px solid gray;}
 span[class*="cloud"] {font-style: italic;}
 ~~~
 
-~~~html<span class="barren rocky">Mercury</span>  
+~~~html
+<span class="barren rocky">Mercury</span>  
 <span class="cloudy barren">Venus</span>  
 <span class="life-bearing cloudy">Earth</span>
 ~~~
@@ -720,7 +751,8 @@ span[class*="cloud"] {font-style: italic;}
 
 这种用法有许多有用的场景，例如为所有到O'Reilly Media网页的链接添加特殊样式。避免给它们设置类名并基于类添加样式，可以简单地使用下面的规则：
 
-~~~cssa[href*="oreilly.com"] {font-weight: bold;}
+~~~css
+a[href*="oreilly.com"] {font-weight: bold;}
 ~~~
 
 选择不限于使用`class`和`href`属性，任何属性都可以。`title`、`alt`、`src`、`id`……可以基于任何属性值的子串添加样式。下面的规则选择所有源文件 URL 中包含字符串“space”的图片：
@@ -848,15 +880,32 @@ _**至 2017 年底，Opera Mini、Android 浏览器和 Edge 不支持此能力�
 
 ~~~html
 <html> 
-  <head>    <base href="http://www.meerkat.web/">    <title>Meerkat Central</title> </head>  <body>    <h1>Meerkat <em>Central</em></h1>    <p>      Welcome to Meerkat <em>Central</em>, the <strong>best meerkat web site on <a href="inet.html">the <em>entire</em> Internet</a></strong>!
+  <head>
+    <base href="http://www.meerkat.web/">
+    <title>Meerkat Central</title> </head>
+  <body>
+    <h1>Meerkat <em>Central</em></h1>
+    <p>
+      Welcome to Meerkat <em>Central</em>, the <strong>best meerkat web site on <a href="inet.html">the <em>entire</em> Internet</a></strong>!
     </p> 
-    <ul>      <li>We offer: 
-        <ul>          <li><strong>Detailed information</strong> on how to adopt a meerkat</li> 
-          <li>Tips for living with a meerkat</li>          <li><em>Fun</em> things to do with a meerkat, including:            <ol>              <li>Playing fetch</li> 
+    <ul>
+      <li>We offer: 
+        <ul>
+          <li><strong>Detailed information</strong> on how to adopt a meerkat</li> 
+          <li>Tips for living with a meerkat</li>
+          <li><em>Fun</em> things to do with a meerkat, including:
+            <ol>
+              <li>Playing fetch</li> 
               <li>Digging for food</li> 
-              <li>Hide and seek</li>            </ol> 
-          </li>         </ul>
-      </li>      <li>...and so much more!</li>    </ul>    <p>Questions? <a href="mailto:suricate@meerkat.web">Contact us!</a> </p>  </body> 
+              <li>Hide and seek</li>
+            </ol> 
+          </li>
+         </ul>
+      </li>
+      <li>...and so much more!</li>
+    </ul>
+    <p>Questions? <a href="mailto:suricate@meerkat.web">Contact us!</a> </p>
+  </body> 
 </html>
 ~~~
 
@@ -932,13 +981,22 @@ blockquote b, p b {color: gray;}
 后代选择器的一个容易被忽略的地方是，元素和后代元素之间可以间隔无限代其他元素。例如，如果使用规则`ul em`，将会选择`ul`元素后代中的任何`em`元素，无论`em`元素嵌套多么深。因此，对下面的代码，`ul em`会匹配到其中的`em`元素。
 
 ~~~html
-<ul>  <li>List item 1    <ol>      <li>List item 1-1</li>      <li>List item 1-2</li>      <li>List item 1-3        <ol>          <li>List item 1-3-1</li> 
+<ul>
+  <li>List item 1
+    <ol>
+      <li>List item 1-1</li>
+      <li>List item 1-2</li>
+      <li>List item 1-3
+        <ol>
+          <li>List item 1-3-1</li> 
           <li>List item <em>1-3-2</em></li> 
           <li>List item 1-3-3</li> 
         </ol>
-      </li>      <li>List item 1-4</li> 
+      </li>
+      <li>List item 1-4</li> 
     </ol>
-  </li></ul>
+  </li>
+</ul>
 ~~~
 
 后代选择器的另一个更微妙的地方是，它没有接近程度的概念。换句话说，文档树中两个元素的紧密程度与是否应用规则无关。这将会在考虑特异性（特度，在后面讨论）和元素规则之间的相互抵消时产生影响。
@@ -948,9 +1006,12 @@ blockquote b, p b {color: gray;}
 ~~~html
 div:not(.help) span {color: gray;} 
 div.help span {color: red;}
-<div class="help"> 
-  <div class="aside">    This text contains <span>a span element</span> within. 
-  </div></div>
+
+<div class="help"> 
+  <div class="aside">
+    This text contains <span>a span element</span> within. 
+  </div>
+</div>
 ~~~
 
 第一条规则表示“任何`class`中不包含单词`help`的`div`元素中的`span`元素被设置为灰色”，第二条规则表示“任何`class`中包含单词`help`的`div`元素中的`span`元素被设置为红色”。对示例中的HTML代码来说，两条规则都会被作用于`span`元素。
@@ -968,7 +1029,8 @@ h1 > strong {color: red;}
 这条规则将会把下面的第一个`h1`元素中的`strong`元素设置为红色，第二个`h1`元素中的`strong`元素则不会被设置为红色。
 
 ~~~html
-<h1>This is <strong>very</strong> important.</h1><h1>This is <em>really <strong>very</strong></em> important.</h1>
+<h1>This is <strong>very</strong> important.</h1>
+<h1>This is <em>really <strong>very</strong></em> important.</h1>
 ~~~
 
 从右往左读，选择器`h1 > strong`可以译作“选择任何`strong`元素，如果它是一个`h1`元素的子元素”。子元素组合器两边可以添加空格, 你可以根据自己的爱好添加或省略空格，`h1 > strong`、`h1> strong`和`h1>strong`是完全等价的。
@@ -1014,8 +1076,19 @@ CSS的正确性依赖于两个元素的“代码顺序“。在上面的例子�
 需要记住，两个元素之间的文本内容**不会**影响相邻元素组合器。下面的代码片段，树视图与图1-19是一样的：
 
 ~~~html
-<div>  <ol>    <li>List item 1</li>    <li>List item 1</li>    <li>List item 1</li>  </ol>  This is some text that is part of the 'div'. 
-  <ul>    <li>A list item</li>    <li>Another list item</li>    <li>Yet another list item</li>  </ul></div>
+<div>
+  <ol>
+    <li>List item 1</li>
+    <li>List item 1</li>
+    <li>List item 1</li>
+  </ol>
+  This is some text that is part of the 'div'. 
+  <ul>
+    <li>A list item</li>
+    <li>Another list item</li>
+    <li>Yet another list item</li>
+  </ul>
+</div>
 ~~~
 
 尽管两个列表之间有文本内容，选择器`ol + ul`依然会匹配第二个列表。因为文本并不包含一个兄弟元素，而是属于父元素`div`的一部分。如果把文本内容用一个段落元素（`p`）包起来，`ol + ul`匹配第二个列表的行为将会被终止。要匹配第二个列表，需要用`ol + p + ul`这样的选择器。
@@ -1037,7 +1110,21 @@ Selectors Level 3 引入了一个新的兄弟组合器叫做**一般兄弟选择
 如下例，为同一个父元素下跟随在一个`h2`元素后面的任何`ol`元素设置斜体，可以写作`h2 ~ ol {font-style: italic;}`。两个`ol`元素不必都是紧邻兄弟，尽管是紧邻兄弟的话也会被这条规则匹配。效果见图1-22.
 
 ~~~html
-<div>  <h2>Subheadings</h2>  <p>It is the case that not every heading can be a main heading. Some headings must be subheadings. Examples include:</p>  <ol>    <li>Headings that are less important</li>    <li>Headings that are subsidiary to more important headlines</li>    <li>Headings that like to be dominated</li>  </ol>  <p>Let's restate that for the record:</p>  <ol>    <li>Headings that are less important</li>    <li>Headings that are subsidiary to more important headlines</li>    <li>Headings that like to be dominated</li>  </ol></div>
+<div>
+  <h2>Subheadings</h2>
+  <p>It is the case that not every heading can be a main heading. Some headings must be subheadings. Examples include:</p>
+  <ol>
+    <li>Headings that are less important</li>
+    <li>Headings that are subsidiary to more important headlines</li>
+    <li>Headings that like to be dominated</li>
+  </ol>
+  <p>Let's restate that for the record:</p>
+  <ol>
+    <li>Headings that are less important</li>
+    <li>Headings that are subsidiary to more important headlines</li>
+    <li>Headings that like to be dominated</li>
+  </ol>
+</div>
 ~~~
 
 ![图1-22：选择跟随兄弟元素](figure1-22.png)
@@ -1087,7 +1174,8 @@ a:visited:hover:lang(de) {color: silver;}
 图 1-23 展示了一个给 HTML 中的根元素添加样式的例子：
 
 ~~~css
-:root {border: 10px dotted gray;} body {border: 10px solid black;}
+:root {border: 10px dotted gray;} 
+body {border: 10px solid black;}
 ~~~
 
 ![图1-23：设置根元素样式](figure1-23.png)
@@ -1103,7 +1191,11 @@ a:visited:hover:lang(de) {color: silver;}
 注意，一个元素如果要被`:empty`匹配，它必须（从解析的角度看）是真正空的——没有空白、可见内容，或后代元素。在下面的元素中，只有第一个和最后一个会被`p:empty`匹配。
 
 ~~~html
-<p></p><p> </p><p></p><p><!—-a comment--></p>
+<p></p>
+<p> </p>
+<p>
+</p>
+<p><!—-a comment--></p>
 ~~~
 
 第二个和第三个段落不会匹配`:empty`，因为它们不是空的：它们各自包含一个空格和一个换行符，都会被当做文本节点，因此不是空状态。最后一个段落能够匹配，因为注释既不会被当成内容，也不会被当成空白。但是如果在注释的任何一侧添加一个空格或者换行，`p:empty`将不再匹配它。
@@ -1134,7 +1226,9 @@ a[href] img:only-child {border: 2px solid black;}
 ~~~
 
 ~~~html
-<a href="http://w3.org/"><img src="w3.png" alt="W3C"></a> <a href="http://w3.org/"><img src="w3.png" alt=""> The W3C</a> <a href="http://w3.org/"><img src="w3.png" alt=""> <em>The W3C</em></a>
+<a href="http://w3.org/"><img src="w3.png" alt="W3C"></a> 
+<a href="http://w3.org/"><img src="w3.png" alt=""> The W3C</a> 
+<a href="http://w3.org/"><img src="w3.png" alt=""> <em>The W3C</em></a>
 ~~~
 
 ![图片1-24：选择是链接中的唯一子元素的图片](figure1-24.png)
@@ -1150,7 +1244,9 @@ a[href] img:only-child {border: 5px solid black;}
 ~~~
 
 ~~~html
-<a href="http://w3.org/"><img src="w3.png" alt="W3C"></a> <a href="http://w3.org/"><span><img src="w3.png" alt="W3C"></span></a> <a href="http://w3.org/">A link to <span>the <img src="w3.png" alt=""> web</span> site</a>
+<a href="http://w3.org/"><img src="w3.png" alt="W3C"></a> 
+<a href="http://w3.org/"><span><img src="w3.png" alt="W3C"></span></a> 
+<a href="http://w3.org/">A link to <span>the <img src="w3.png" alt=""> web</span> site</a>
 ~~~
 
 ![图片1-25：选择是链接中的唯一子元素的图片](figure1-25.png)
@@ -1172,7 +1268,8 @@ a[href] img:only-of-type {border: 5px solid black;}
 ~~~
 
 ~~~html
-<a href="http://w3.org/"><b>•</b><img src="w3.png" alt="W3C"></a> <a href="http://w3.org/"><span><b>•</b><img src="w3.png" alt="W3C"></span></a>
+<a href="http://w3.org/"><b>•</b><img src="w3.png" alt="W3C"></a> 
+<a href="http://w3.org/"><span><b>•</b><img src="w3.png" alt="W3C"></span></a>
 ~~~
 
 ![图片1-26：选择兄弟元素中的唯一图片](figure1-26.png)
@@ -1220,7 +1317,15 @@ p.unique:only-of-type {color: red;}
 伪类`:first-child`用来选择某个元素的第一个子元素，看下面的代码：
 
 ~~~html
-<div>  <p>These are the necessary steps:</p>  <ul>    <li>Insert key</li>    <li>Turn key <strong>clockwise</strong></li>    <li>Push accelerator</li>  </ul>  <p>Do <em>not</em> push the brake at the same time as the accelerator. </p></div>
+<div>
+  <p>These are the necessary steps:</p>
+  <ul>
+    <li>Insert key</li>
+    <li>Turn key <strong>clockwise</strong></li>
+    <li>Push accelerator</li>
+  </ul>
+  <p>Do <em>not</em> push the brake at the same time as the accelerator. </p>
+</div>
 ~~~
 
 在这个例子中，是第一个子元素的元素是：第一个`p`、第一个`li`,以及`strong`和`em`元素。使用下面两条规则：
@@ -1241,7 +1346,15 @@ li:first-child {text-transform: uppercase;}
 像前面提到的那样，最常见的错误是以为`p:first-child`会选择`p`元素的第一个子元素。记住伪类的本质，是为伪类绑定的元素添加一些影子类，假设把这些影子类真的添加代码里，看起来将会是这样：
 
 ~~~html
-<div>  <p class="first-child">These are the necessary steps:</p>  <ul>    <li class="first-child">Insert key</li>    <li>Turn key <strong class="first-child">clockwise</strong></li>    <li>Push accelerator</li>  </ul>  <p>Do <em class="first-child">not</em> push the brake at the same time as the accelerator.</p></div>
+<div>
+  <p class="first-child">These are the necessary steps:</p>
+  <ul>
+    <li class="first-child">Insert key</li>
+    <li>Turn key <strong class="first-child">clockwise</strong></li>
+    <li>Push accelerator</li>
+  </ul>
+  <p>Do <em class="first-child">not</em> push the brake at the same time as the accelerator.</p>
+</div>
 ~~~
 
 因此，要选择是其他元素第一个子元素的`em`元素，应该使用`em:first-child`。
@@ -1254,7 +1367,15 @@ li:last-child {text-transform: uppercase;}
 ~~~
 
 ~~~html
-<div>  <p>These are the necessary steps:</p>  <ul>    <li>Insert key</li>    <li>Turn key <strong>clockwise</strong></li>    <li>Push accelerator</li>  </ul>  <p>Do <em>not</em> push the brake at the same time as the accelerator. </p></div>
+<div>
+  <p>These are the necessary steps:</p>
+  <ul>
+    <li>Insert key</li>
+    <li>Turn key <strong>clockwise</strong></li>
+    <li>Push accelerator</li>
+  </ul>
+  <p>Do <em>not</em> push the brake at the same time as the accelerator. </p>
+</div>
 ~~~
 
 ![图1-28：给最后一个子元素添加样式](figure1-28.png)
@@ -1330,7 +1451,15 @@ li:nth-child(1) {text-transform: uppercase;}
 ~~~
 
 ~~~html
-<div>  <p>These are the necessary steps:</p>  <ul>    <li>Insert key</li>    <li>Turn key <strong>clockwise</strong></li>    <li>Push accelerator</li>  </ul>  <p>Do <em>not</em> push the brake at the same time as the accelerator. </p></div>
+<div>
+  <p>These are the necessary steps:</p>
+  <ul>
+    <li>Insert key</li>
+    <li>Turn key <strong>clockwise</strong></li>
+    <li>Push accelerator</li>
+  </ul>
+  <p>Do <em>not</em> push the brake at the same time as the accelerator. </p>
+</div>
 ~~~
 
 如果把数字从`1`变成`2`，那么没有段落（`p`）被选中，中间的列表项（`li`）会被选中，如图1-31所示。
