@@ -6,6 +6,17 @@ _**继承**_机制指元素的属性值被传递给它的后代。用户代理�
 
 ## 特度
 
+### 特度注意点
+- 特度优先级值 x，y，z，w 分别对应于
+  - x：行内样式
+  - y：ID 选择器
+  - z：类、属性、伪类选择器
+  - w：标签、伪元素选择器
+  - 添加了 `!important` 标记的属性需单独考虑
+-html 元素没有设置 background 属性但 body 元素设置了 background 时，body 的 background 属性会传递给 html 元素，继承机制的唯一例外
+- 尽量不要使用全局通配符 `*`，会破坏继承（被破坏的元素属性可使用值 `inherit` 修复）
+- 标签状态添加样式的建议顺序：link-visited-focus-hover-active LVFHA
+
 ### 声明和特度
 ### 全局选择器特度
 ### ID和属性选择器特度
@@ -15,6 +26,14 @@ _**继承**_机制指元素的属性值被传递给它的后代。用户代理�
 ## 继承
 
 ## 层叠
+
+### 元素应用样式的规则
+
+1. 找出所有选择器可以匹配此元素的规则
+2. 按照 explicit weight 排序所有声明，所有标记为 !important 的规则拥有更高的权重
+3. 按照样式来源排序所有声明，三个 origin：author、reader 和 user angent；绝大部分环境中  reader !important > author !important > author > reader > user agent
+4. 按照特度排序所有声明
+5. 按照样式表或文档中的位置排序所有声明，在后面的规则拥有更高权重。Import 的样式表插入在当前样式表的最前面
 
 ### 按重要性和来源排序
 ### 按特度排序
