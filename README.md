@@ -22,6 +22,10 @@ CSS的标准更新非常快，本书的第一章写于2012年，现在来看有�
 
 [3 特度和层叠](https://jack-sparrow.github.io/CSS-The-Definitive-Guide-4th-zh-CN/docs/3_Specificity_and_the_Cascade/)
 
+[4 值和单位](https://jack-sparrow.github.io/CSS-The-Definitive-Guide-4th-zh-CN/docs/4_Values_and_Units/)
+
+[5 字体](https://jack-sparrow.github.io/CSS-The-Definitive-Guide-4th-zh-CN/docs/5_Fonts/)
+
 
 ### Update:
 
