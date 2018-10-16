@@ -79,4 +79,6 @@
 		* [按顺序排序](3_Specificity_and_the_Cascade/README.md#按顺序排序)
 		* [非CSS显示标识](3_Specificity_and_the_Cascade/README.md#非css显示标识)
 	* [总结](3_Specificity_and_the_Cascade/README.md#总结)
+		* [特度注意点](3_Specificity_and_the_Cascade/README.md#特度注意点)
+		* [元素应用样式的规则](3_Specificity_and_the_Cascade/README.md#元素应用样式的规则)
 
