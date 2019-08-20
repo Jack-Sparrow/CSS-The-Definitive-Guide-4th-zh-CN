@@ -26,6 +26,8 @@ CSS的标准更新非常快，本书的第一章写于2012年，现在来看有�
 
 [5 字体](https://jack-sparrow.github.io/CSS-The-Definitive-Guide-4th-zh-CN/docs/5_Fonts/)
 
+[6 文本](https://jack-sparrow.github.io/CSS-The-Definitive-Guide-4th-zh-CN/docs/6_Text/)
+
 
 ### Update:
 

@@ -93,3 +93,4 @@
 	* [位置](4_Values_and_Units/README.md#位置)
 	* [自定义值](4_Values_and_Units/README.md#自定义值)
 * [第五章 字体](5_Fonts/README.md)
+* [第六章 文本](6_Text/README.md)
