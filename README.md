@@ -28,6 +28,8 @@ CSS的标准更新非常快，本书的第一章写于2012年，现在来看有�
 
 [6 文本](https://jack-sparrow.github.io/CSS-The-Definitive-Guide-4th-zh-CN/docs/6_Text/)
 
+[7 基本视觉格式化](https://jack-sparrow.github.io/CSS-The-Definitive-Guide-4th-zh-CN/docs/7_Basic_Visual_Format/)
+
 
 ### Update:
 
