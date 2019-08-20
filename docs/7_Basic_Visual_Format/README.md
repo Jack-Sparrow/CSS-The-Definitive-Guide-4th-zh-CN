@@ -73,11 +73,12 @@ the browser window in screen media, or the printable area of the page in print m
 25. CSS is moving to a system where there are two kinds of display: **the outer display type and the inner display type**. Value keywords like `block` and `inline` represent the outer display type, which provides how the display box interacts with its surroundings. The inner display, in this case flow, describes what should happen inside the element.
 
 | Old Values | New Values |
-------|------------
+---|------------
 block | block flow 
 inline | inline flow
 inline-block | inline flow-root
 list-item | list-item block flow
+
 As of late 2017, flow and flow-root were supported by Firefox and Chrome, but no other browsers.
 26. 其他 display 属性值
 27. The computed value of `display` can change if an element is floated or positioned. It can also change when declared for the root element. In fact, the values `display`, `position`, and `float` interact in interesting ways.
