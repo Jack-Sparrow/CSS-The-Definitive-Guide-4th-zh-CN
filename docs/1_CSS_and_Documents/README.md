@@ -1,6 +1,6 @@
 # CSS 和文档
 
-Cascading Style Sheets (CSS) 是一个能够变换文档和文档集合呈现方式的强大工具，它几乎已经扩展到 web 的每个角落，包括许多看起来不是 web 环境的地方。例如，基于 Gecko<sup id="a1">[1](#f1)</sup> 的浏览器通过 CSS 影响 chrome 浏览器自身的呈现，许多 RSS 客户端允许你将 CSS 应用于推送内容，一些即时通讯客户端使用 CSS 来变换聊天窗口。JavaScript 框架（如 jQuery ）甚至 JavaScript 本身所使用的语法中，都有 CSS 的踪迹。它无处不在！
+Cascading Style Sheets (CSS) 是一个能够变换文档和文档集合呈现方式的强大工具，它几乎已经扩展到 web 的每个角落，包括许多看起来不是 web 环境的地方。例如，基于 Gecko<sup id="a1">[1](#f1)</sup> 的浏览器通过 CSS 影响自身 chrome<sup id="a1_1">[1.1](#f1_1)</sup> 的呈现，许多 RSS 客户端允许你将 CSS 应用于推送内容，一些即时通讯客户端使用 CSS 来变换聊天窗口。JavaScript 框架（如 jQuery ）甚至 JavaScript 本身所使用的语法中，都有 CSS 的踪迹。它无处不在！
 
 ## Web 样式简史
 
@@ -97,7 +97,8 @@ CSS就是在这种背景下引入的，目的是提供一种简单的、声明�
 现在我们把注意力放在`block`和`inline`上，看下面的代码：
 
 ~~~html
-<body>	<p>This is a paragraph with <em>an inline element</em> within > it.</p> 
+<body>
+	<p>This is a paragraph with <em>an inline element</em> within > it.</p> 
 </body>
 ~~~
 
@@ -121,13 +122,21 @@ em {display: block;}
 修改元素的显示角色在 HTML 文档中很有用，它对 XML 文档也至关重要。XML 文档一般没有默认的显示角色，而完全依赖文档开发者去定义它们。例如，如果你想要展示下面的 XML 片段：
 
 ~~~xml
-<book>	<maintitle>Cascading Style Sheets: The Definitive Guide</maintitle>  
-	<subtitle>Third Edition</subtitle>  	<author>Eric A. Meyer</author>  	<publisher>O'Reilly and Associates</publisher>  	<pubdate>November 2006</pubdate>  	<isbn type="print">978-0-596-52733-4</isbn>  </book>  
-<book>  	<maintitle>CSS Pocket Reference</maintitle>   
+<book>
+	<maintitle>Cascading Style Sheets: The Definitive Guide</maintitle>  
 	<subtitle>Third Edition</subtitle>  
 	<author>Eric A. Meyer</author>  
 	<publisher>O'Reilly and Associates</publisher>  
-	<pubdate>October 2007</pubdate>  	<isbn type="print">978-0-596-51505-8</isbn>  
+	<pubdate>November 2006</pubdate>  
+	<isbn type="print">978-0-596-52733-4</isbn>  
+</book>  
+<book>  
+	<maintitle>CSS Pocket Reference</maintitle>   
+	<subtitle>Third Edition</subtitle>  
+	<author>Eric A. Meyer</author>  
+	<publisher>O'Reilly and Associates</publisher>  
+	<pubdate>October 2007</pubdate>  
+	<isbn type="print">978-0-596-51505-8</isbn>  
 </book>
 ~~~
 
@@ -161,13 +170,26 @@ publisher, pubdate {display: inline;}
 这种结构是 HTML 和 CSS 之间关系所固有的组成部分，没有它，关系就不会存在。为了更好地理解这种结构，我们把下面这个示例的HTML文档拆解来看：
 
 ~~~html
-<html>  <head>    <title>Eric's World of Waffles</title>    <meta http-equiv="content-type" content="text/html; charset=utf-8">    <link rel="stylesheet" type="text/css" href="sheet1.css" media="all"> 
-    <style type="text/css">      /* These are my styles! Yay! */      @import url(sheet2.css);    </style>  </head>
-  <body>    <h1>Waffles!</h1>    <p style="color: gray;">The most wonderful of all breakfast 
+<html>
+  <head>
+    <title>Eric's World of Waffles</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="sheet1.css" media="all"> 
+    <style type="text/css">
+      /* These are my styles! Yay! */
+      @import url(sheet2.css);
+    </style>
+  </head>
+  <body>
+    <h1>Waffles!</h1>
+    <p style="color: gray;">The most wonderful of all breakfast 
     foods is the waffle—a ridged and cratered slab of home-cooked, 
     fluffy goodness that makes every child's heart soar with joy. 
     And they're so easy to make! Just a simple waffle-maker and some 
-    batter, and you're ready for a morning of aromatic ecstasy!    </p>  </body></html>
+    batter, and you're ready for a morning of aromatic ecstasy!
+    </p>
+  </body>
+</html>
 ~~~
 
 代码的处理结果及应用的样式的如图 4 所示。
@@ -199,7 +221,8 @@ publisher, pubdate {display: inline;}
 那么外部样式表是什么样的格式呢？和我们在前面章节中和在示例HTML文档中看到的那些样式一样，外部样式也是简单的规则列表，但是这些规则存储在自己的文件里面。要记住，HTML 和其它任何标记语言都不能放进样式表中——它只能包含样式规则。一个外部样式表的内容是这样的：
 
 ~~~csss
-h1 {color: red;}h2 {color: maroon; background: white;} 
+h1 {color: red;}
+h2 {color: maroon; background: white;} 
 h3 {color: white; background: black; font: medium Helvetica;}
 ~~~
 
@@ -233,8 +256,11 @@ _**外部样式中不能包含任何文档标记，只能包含 CSS 规则和 CS
 
 这种写法会使浏览器加载两个样式表，并合并每个样式表的规则，然后把它们全部应用于文档。例如
 
-~~~html<link rel="stylesheet" type="text/css" href="basic.css"> 
-<link rel="stylesheet" type="text/css" href="splash.css"><p class="a1">This paragraph will be gray only if styles from the stylesheet 'basic.css' are applied.</p><p class="b1">This paragraph will be gray only if styles from the stylesheet 'splash.css' are applied.</p>
+~~~html
+<link rel="stylesheet" type="text/css" href="basic.css"> 
+<link rel="stylesheet" type="text/css" href="splash.css">
+<p class="a1">This paragraph will be gray only if styles from the stylesheet 'basic.css' are applied.</p>
+<p class="b1">This paragraph will be gray only if styles from the stylesheet 'splash.css' are applied.</p>
 ~~~
 
 有一个可以但是并没有在示例代码中出现的属性`title`。这个属性并不常用，但它可能会在未来变得重要，如果使用不当会带来意想不到的效果。为什么呢？我们将在下一节中探讨。
@@ -246,7 +272,9 @@ _**外部样式中不能包含任何文档标记，只能包含 CSS 规则和 CS
 如果浏览器能够使用备用的样式表，它会用`link`元素的`title`属性值来生成一个可选择的样式列表。你可以像下面这样写：
 
 ~~~html
-<link rel="stylesheet" type="text/css" href="sheet1.css" title="Default"><link rel="alternate stylesheet" type="text/css" href="bigtext.css" title="Big Text"><link rel="alternate stylesheet" type="text/css" href="zany.css" title="Crazy colors!">
+<link rel="stylesheet" type="text/css" href="sheet1.css" title="Default">
+<link rel="alternate stylesheet" type="text/css" href="bigtext.css" title="Big Text">
+<link rel="alternate stylesheet" type="text/css" href="zany.css" title="Crazy colors!">
 ~~~
 
 然后用户就可以选择他们想用的样式，浏览器将会从第一个（这里被标记为“默认”（Default））切换到用户选择的任意一个。图6展示了这种选择机制的一个可能的（实际上是CSS再次兴起的早期所使用的）完成方式。
@@ -260,7 +288,10 @@ _**到2016年底，大部分基于Gecko引擎的浏览器已经支持了备用�
 通过给`title`属性赋相同的值，备用样式表可以分组组合。因此，你可以让用户在无论屏幕媒体还是打印媒体中都能选择不同的展示方式。例如：
 
 ~~~html
-<link rel="stylesheet" type="text/css" href="sheet1.css" title="Default" media="screen"><link rel="stylesheet" type="text/css" href="print-sheet1.css" title="Default" media="print"><link rel="alternate stylesheet" type="text/css" href="bigtext.css" title="Big Text" media="screen"><link rel="alternate stylesheet" type="text/css" href="print-bigtext.css" title="Big Text" media="print">
+<link rel="stylesheet" type="text/css" href="sheet1.css" title="Default" media="screen">
+<link rel="stylesheet" type="text/css" href="print-sheet1.css" title="Default" media="print">
+<link rel="alternate stylesheet" type="text/css" href="bigtext.css" title="Big Text" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="print-bigtext.css" title="Big Text" media="print">
 ~~~
 
 如果用户在支持备用样式表选择机制的用户代理中选择了“Big Text”，那么`bigtext.css`将在屏幕媒体中为文档设置样式，而`print-bigtext.css`将会被用在打印媒体上。`sheet1.css`和`print-sheet1.css`不会被用在任何一个媒体中。
@@ -270,7 +301,9 @@ _**到2016年底，大部分基于Gecko引擎的浏览器已经支持了备用�
 此外，如果你把多个样式表都指派为优先使用，那么除了一个之外所有其它的样式表都会被忽略。考虑下：
 
 ~~~html
-<link rel="stylesheet" type="text/css" href="sheet1.css" title="Default Layout"><link rel="stylesheet" type="text/css" href="sheet2.css" title="Default Text Sizes"><link rel="stylesheet" type="text/css" href="sheet3.css" title="Default Colors">
+<link rel="stylesheet" type="text/css" href="sheet1.css" title="Default Layout">
+<link rel="stylesheet" type="text/css" href="sheet2.css" title="Default Text Sizes">
+<link rel="stylesheet" type="text/css" href="sheet3.css" title="Default Colors">
 ~~~
 
 由于都被设置了`title`属性，三个`link`元素都被指定为优先样式表，但只有一个会被真正被作为优先样式表，而另外两个会完全被忽略。哪两个呢？没有办法确定。因为HTML并没有提供一种方式，来决定哪个样式应该被忽略，哪个样式应该被使用。
@@ -302,8 +335,10 @@ _**到2016年底，大部分基于Gecko引擎的浏览器已经支持了备用�
 像`link`一样，`@import`可以指示浏览器加载一个外部样式然后把它应用到 HTML 文档渲染中。它们之间主要的区别只是在于语法和命令的位置。正如我们看到的这样，`@import`是被包含在`style`中的。命令必须放在其他 CSS 规则之前，否则它不会生效。看这个例子：
 
 ~~~html
-<style type="text/css">@import url(styles.css); /* @import comes first */ 
-h1 {color: gray;}</style>
+<style type="text/css">
+@import url(styles.css); /* @import comes first */ 
+h1 {color: gray;}
+</style>
 ~~~
 
 与`link`相同的是，一个文档中可以有多个`@import`声明。但与`link`不同的是，`@import`指令中的每个样式表都会被加载和使用，`@import`不能设置备选样式表。因此，如果使用下面的代码：
@@ -319,7 +354,8 @@ h1 {color: gray;}</style>
 类似`link`，你可以在样式表的 URL 后添加媒体描述符，来限制样式表被用于一个或多个媒体：
 
 ~~~css
-@import url(sheet2.css) all;@import url(blueworld.css) screen; 
+@import url(sheet2.css) all;
+@import url(blueworld.css) screen; 
 @import url(zany.css) projection, print;
 ~~~
 
@@ -329,7 +365,10 @@ h1 {color: gray;}</style>
 
 ~~~css
 @import url(http://example.org/library/layout.css); 
-@import url(basic-text.css);@import url(printer.css) print;body {color: red;}h1 {color: blue;}
+@import url(basic-text.css);
+@import url(printer.css) print;
+body {color: red;}
+h1 {color: blue;}
 ~~~
 
 这些不是真正使用的样式，但是你可以通过它们看到`@import`的用法。上例中同时使用了绝对和相对 URL，像`link`一样，两种都URL格式都可以使用。
@@ -351,7 +390,8 @@ Header add Link "</ui/testing.css>;rel=stylesheet;type=text/css"
 支持该特性的浏览器会将引用的样式表与任何该`.htaccess`文件配置下的文档相关联，浏览器会把它当做一个链接样式表。另一个可能更有效的选择是，把相同的规则添加到服务器的`httpd.conf`文件中：
 
 ~~~xml
-<Directory /path/to/ /public/html/directory>Header add Link "</ui/testing.css>;rel=stylesheet;type=text/css" 
+<Directory /path/to/ /public/html/directory>
+Header add Link "</ui/testing.css>;rel=stylesheet;type=text/css" 
 </Directory>
 ~~~
 
@@ -383,7 +423,8 @@ _**等价的技术存在于通用脚本语言中，如 PHP 和 IIS，这两种�
 那么，样式表的内容到底是什么样呢？像这样：
 
 ~~~css
-h1 {color: maroon;}body {background: yellow;}
+h1 {color: maroon;}
+body {background: yellow;}
 ~~~
 
 各种各样的嵌入样式表都是有这样的内容组成，无论内容长短，简单还是复杂。很少有文档的`style`元素不包含任何规则——尽管有的文档可能只包含一个简单的`@import`声明列表而没有像上面那样的真正的规则。
@@ -396,7 +437,8 @@ h1 {color: maroon;}body {background: yellow;}
 
 ~~~html
 <style type="text/css"><!-- 
-h1 {color: maroon;}body {background: yellow;} 
+h1 {color: maroon;}
+body {background: yellow;} 
 --></style>
 ~~~
 
@@ -444,11 +486,15 @@ h1 {color: maroon;}body {background: yellow;}
 
 ~~~css
 rainbow:infrared red orange yellow green blue indigo violet ultraviolet; 
-rainbow:	infrared red orange yellow green blue indigo violet ultraviolet;  
-rainbow:	infrared 
-	red	orange 
+rainbow:
+	infrared red orange yellow green blue indigo violet ultraviolet;  
+rainbow:
+	infrared 
+	red
+	orange 
 	yellow 
-	green	blue 
+	green
+	blue 
 	indigo 
 	violet 
 	ultraviolet 
@@ -460,13 +506,20 @@ rainbow:	infrared
 类似地，你可以使用空白把一系列样式规则按照任何你偏好的风格格式化，这是无限多种可能中的五种格式：
 
 ~~~css
-html{color:black;}body {background: white;} 
-p{	color: gray;} 
-h2 {	color : silver ; 
-	}ol 
-	{		color 
-			:		silver 
-			;}
+html{color:black;}
+body {background: white;} 
+p{
+	color: gray;} 
+h2 {
+	color : silver ; 
+	}
+ol 
+	{
+		color 
+			:
+		silver 
+			;
+}
 ~~~
 
 在第一条规则中，空白被最大化地略去了。这种情况通常发生在 CSS “压缩”的时候，这时会把不影响语义的空格全部删除。前两条之后的规则逐渐加入更多空白，到最后一条规则，几乎每个可以被分隔的地方都被分开了。
@@ -479,7 +532,8 @@ h2 {	color : silver ;
 
 CSS是允许添加注释的。与 C/C++ 中用`/*`和`*/`包裹的注释类似：
 
-~~~css/* This is a CSS1 comment */
+~~~css
+/* This is a CSS1 comment */
 ~~~
 
 象 C++ 中一样，注释可以连续多行：
@@ -494,7 +548,9 @@ any problem whatsoever. */
 
 ~~~css
 /* This is a comment, in which we find 
-another comment, which is WRONG/* Another comment */and back to the first comment */
+another comment, which is WRONG
+/* Another comment */
+and back to the first comment */
 ~~~
 
 _**一个可能会创建了“嵌套”注释的场景是，当想要把样式表中一大块包含了注释的代码临时注释掉时。因为 CSS 不允许嵌套注释，“外层”注释会在“内层”注释结束的时候就结束了。**_
@@ -584,7 +640,8 @@ _**在撰写本文时<sup id="a6">[8](#f6)</sup>，一些浏览器还支持`proj
 ~~~
 
 ~~~css
-@import url(frobozz.css) screen, print;@media screen, print {...}
+@import url(frobozz.css) screen, print;
+@media screen, print {...}
 ~~~
 
 当向这些媒体类型添加特性描述符（例如描述媒体分辨率和色深的值）时，事情将变得更加有趣。
@@ -597,7 +654,8 @@ _**在撰写本文时<sup id="a6">[8](#f6)</sup>，一些浏览器还支持`proj
 <link href="print-color.css" type="text/css" media="print and (color)" rel="stylesheet">
 ~~~
 
-~~~css@import url(print-color.css) print and (color);
+~~~css
+@import url(print-color.css) print and (color);
 ~~~
 
 任何使用媒体类型的地方，都可以使用媒体查询（描述符）。这意味着对上面的例子，可以使用逗号分隔可以列出多个查询：
@@ -606,7 +664,8 @@ _**在撰写本文时<sup id="a6">[8](#f6)</sup>，一些浏览器还支持`proj
 <link href="print-color.css" type="text/css" media="print and (color), screen and (color-depth: 8)" rel="stylesheet">
 ~~~
 
-~~~css@import url(print-color.css) print and (color), screen and (color-depth: 8);
+~~~css
+@import url(print-color.css) print and (color), screen and (color-depth: 8);
 ~~~
 
 任何情况下，只要任何一个（逗号分隔的）媒体查询的判断结果为“真”，就会使用关联的样式表。因此，在前面的`@import`中，`print-color.css`将会被应用于彩色打印机或彩色投影环境的渲染。如果在黑白打印机上打印，两个查询的结果都是“假”，则`print-color.css`不会被应用于文档，对于任何屏幕媒体都是如此。
@@ -615,7 +674,8 @@ _**在撰写本文时<sup id="a6">[8](#f6)</sup>，一些浏览器还支持`proj
 
 ~~~css
 @media all and (min-resolution: 96dpi) {...}
-@media (min-resolution: 960dpi) {...}
+
+@media (min-resolution: 960dpi) {...}
 ~~~
 
 一般来说，媒体特性描述符的格式类似于CSS中的属性-值对，但有一些区别。最明显的区别是可以指定一些没有值的特性，例如，使用`(color)`来匹配任何基于颜色的媒体，而使用`(color: 16)`来匹配16位色深的颜色媒体。实际上，不含值的描述符是一个对特性是否存在的一个真/假值判断：`(color)`表示判断“是否是颜色媒体？”。
@@ -824,6 +884,8 @@ CSS 可以完全改变用户代理显示元素的方式。这种改变可以使�
 * * *
 
 <b id="f1">1.</b> 译注：Firefox等浏览器所使用的引擎。[↩](#a1)
+
+<b id="f1_1">1.1</b> 译注：浏览器 viewport 之外的部分，如：地址栏、书签栏、标签栏等。Definition: Chrome is the visual design elements that give users information about or commands to operate on the screen's content (as opposed to being part of that content). These design elements are provided by the underlying system — whether it be an operating system, a website, or an application — and surround the user's data. 参见 Issue: [#3](https://github.com/Jack-Sparrow/CSS-The-Definitive-Guide-4th-zh-CN/issues/3) [↩](#a1_1)
 
 <b id="f2">2.</b> 译注：Web发展早期第一个普及的浏览器。[↩](#a2)
 
