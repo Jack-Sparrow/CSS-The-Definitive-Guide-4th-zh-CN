@@ -80,6 +80,7 @@ inline-block | inline flow-root
 list-item | list-item block flow
 
 As of late 2017, flow and flow-root were supported by Firefox and Chrome, but no other browsers.
+
 26. 其他 display 属性值
 27. The computed value of `display` can change if an element is floated or positioned. It can also change when declared for the root element. In fact, the values `display`, `position`, and `float` interact in interesting ways.
 
