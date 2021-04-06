@@ -1473,7 +1473,7 @@ li:nth-child(2) {text-transform: uppercase;}
 
 *图1-31：为第二个元素添加样式*
 
-当然，也可以填入任何证书，如果你要选择是某个元素的第 93 个子元素的一个有序列表，可以使用`ol:nth-child(93)`（不是指子元素集合中的第93个有序列表，见下一节）。
+当然，也可以填入任何正数，如果你要选择是某个元素的第 93 个子元素的一个有序列表，可以使用`ol:nth-child(93)`（不是指子元素集合中的第93个有序列表，见下一节）。
 
 更有用的是，你可以使用简单的算术表达式如`an + b`或`an - b`来定义循环选择，其中`a`和`b`是整数，`n`表示它自己。另外，`+ b`或`- b`的部分如果用不到的话可以去掉。
 
@@ -1579,21 +1579,21 @@ p > a:nth-of-type(even) {background: blue; color: white;}
 
 ### UI状态伪类
 
-|Name|	Description|
-|:----|:------|
-|:enabled|Refers to user-interface elements (such as form elements) that are enabled; that is, available for input.|
-|:disabled|Refers to user-interface elements (such as form elements) that are disabled; that is, not available for input.|
-|:checked|Refers to radio buttons or checkboxes that have been selected, either by the user or by defaults within the document itself.|
-|:indeterminate|Refers to radio buttons or checkboxes that are neither checked nor unchecked; this state can only be set via DOM scripting, and not due to user input.
-|:default|Refers to the radio button, checkbox, or option that was selected by default.
-|:valid|Refers to a user input that meets all of its data validity semantics
-|:invalid|Refers to a user input that does not meet all of its data validity semantics
-|:in-range|Refers to a user input whose value is between the minimum and maximum values
-|:out-of-range|Refers to a user input whose value is below the minimum or above the maximum values allowed by the control
-|:required|Refers to a user input that must have a value set
-|:optional|Refers to a user input that does not need to have a value set
-|:read-write|Refers to a user input that is editable by the user
-|:read-only|Refers to a user input that is not editable by the user
+| Name           | Description                                                                                     |
+| :------------- | :---------------------------------------------------------------------------------------------- |
+| :enabled       | 指启用的用户界面元素（如表单元素）；即可供输入。                                                |
+| :disabled      | 指禁用的用户界面元素(如表单元素)，即不能输入。                                                  |
+| :checked       | 指已被用户或文档本身的默认值选中的单选按钮或复选框。                                            |
+| :indeterminate | 指既不勾选也不取消勾选的单选按钮或复选框，这种状态只能通过 DOM 脚本来设置，而不是由于用户输入。 |
+| :default       | 指默认选择的单选按钮、复选框或选项。                                                            |
+| :valid         | 指满足其所有数据有效性语义的用户输入。                                                          |
+| :invalid       | 指不符合其所有数据有效性语义的用户输入。                                                        |
+| :in-range      | 指用户输入的值介于最小值和最大值之间。                                                          |
+| :out-of-range  | 指用户输入的值低于控件允许的最小值或高于最大值。                                                |
+| :required      | 指用户输入必须有一个设定值                                                                      |
+| :optional      | 指不需要设置值的用户输入。                                                                      |
+| :read-write    | 指用户可编辑的用户输入。                                                                        |
+| :read-only     | 指用户不可编辑的用户输入。                                                                      |
 
 #### 可用和禁用的 UI 元素
 
@@ -1664,7 +1664,7 @@ HTML5 的`min`和`max`属性。`:in-range`和`:out-of-range`伪类。
 
 `:read-write`、`：read-only`
 
-For example, in HTML, a non-disabled, non-read-only input element is :read-write, as is any element with the contenteditable attribute. Everything else matches :read-only:
+例如，在 HTML 中，一个非禁用、非只读的输入元素是 :read-write，任何带有 contenteditable 属性的元素也是如此。其他所有元素都是 :read-only
 
 ### `:target`伪类
 
@@ -1674,13 +1674,13 @@ URL 中包含一个片段标识码，在 CSS 中叫做 *target*，可使用`:tar
 http://www.w3.org/TR/css3-selectors/#target-pseudo
 ~~~
 
-Thanks to :target, you can highlight any targeted element within a document, or you can devise different styles for various types of elements that might be targeted—say, one style for targeted headings, another for targeted tables, and so on.
+多亏了 :target，你可以在文档中突出显示任何目标元素，或者你可以为不同类型的目标元素设计不同的风格--例如，为目标标题设计一种风格，为目标表格设计另一种风格，等等。
 
-:target styles will not be applied in two circumstances:
+:target 样式在两种情况下不会被应用。
 
-If the page is accessed via a URL that does not have a fragment identifier
+如果页面是通过一个没有片段标识符的URL访问的。
 
-If the page is accessed via a URL that has a fragment identifier, but the identifier does not match any elements within the document
+如果通过具有片段标识符的URL访问页面，但该标识符不匹配文档中的任何元素。
 
 ### `:lang`伪类
 
@@ -1734,6 +1734,6 @@ body::after {content: "The End.";}
 
 ## 总结
 
-By using selectors based on the document’s language, authors can create CSS rules that apply to a large number of similar elements just as easily as they can construct rules that apply in very narrow circumstances. The ability to group together both selectors and rules keeps stylesheets compact and flexible, which incidentally leads to smaller file sizes and faster download times.
+通过使用基于文档语言的选择器，作者可以创建适用于大量类似元素的CSS规则，就像他们可以构建适用于非常狭窄环境的规则一样容易。将选择符和规则组合在一起的能力使样式表保持紧凑和灵活，这顺便带来了更小的文件大小和更快的下载时间。
 
-Selectors are the one thing that user agents usually must get right because the inability to correctly interpret selectors pretty much prevents a user agent from using CSS at all. On the flip side, it’s crucial for authors to correctly write selectors because errors can prevent the user agent from applying the styles as intended. An integral part of correctly understanding selectors and how they can be combined is a strong grasp of how selectors relate to document structure and how mechanisms—such as inheritance and the cascade itself—come into play when determining how an element will be styled.
+选择符是用户代理通常必须正确处理的一件事，因为无法正确解释选择符几乎会阻止用户代理使用CSS。反过来说，对于作者来说，正确编写选择符是至关重要的，因为错误会阻止用户代理按照预期的方式应用样式。正确理解选择符以及如何将它们组合起来的一个不可或缺的部分，是对选择符与文档结构的关系，以及在决定元素如何被设计成风格时，继承和级联等机制如何发挥作用的深刻理解。
